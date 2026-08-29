@@ -21,20 +21,20 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 5 — I-5
+## Iteration 6 — I-6
 
-**Goal:** The dark rifle kicks. Recoil, muzzle flash, ammo. Same room. Same dummy. Same cover.
+**Goal:** Dummy dies, you clear the room. Same 20x20. Same rifle. No new geo.
 
-**Not this time:** sprint, win banner, dummy uses cover, 3D map rebuild, audio, ADS, second dummy, merge.
+**Not this time:** sprint, 3D map, extra cover, dummy uses cover, second dummy, audio, ADS, merge.
 
 ### Tickets
 
-- I5-1 Recoil (camera + viewmodel)
-- I5-2 Muzzle flash
-- I5-3 Mag 10, R reload 1.2 s, dry fire no ray
-- I5-4 HUD `AMMO n/10`
-- I5-5 Capture, jump, dummy 3-hit, cover, rifle, Esc, death/respawn unchanged
-- I5-6 README, STUDIO.md, CHANGELOG
+- I6-1 Dummy stays down until reset
+- I6-2 No center banner
+- I6-3 Objective under AMMO: CLEAR THE ROOM / CLEARED 3s then dummy resets
+- I6-4 Player death resets dummy, no 3s wait
+- I6-5 Capture, jump, gun, cover unchanged
+- I6-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +43,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-08-29 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-5 on `iter/I-5` |
+| Iteration | I-6 on `iter/I-6` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |

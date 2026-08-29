@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal killed
+
 const MAX_HP := 3
 const FIRE_INTERVAL := 1.0
 const WORLD_AND_PLAYER := 1 | 2
@@ -48,6 +50,7 @@ func _die() -> void:
 	_mesh.visible = false
 	_head.visible = false
 	_col.disabled = true
+	killed.emit()
 
 
 func reset() -> void:

@@ -1,16 +1,16 @@
 # Changelog
 
+## I-6 — 2026-08-29
+
+Branch `iter/I-6` from `19088d6`. Pike numbers.
+
+- I6-1 Dummy HP 0: mesh hidden, fire stopped. No damage source while down.
+- I6-2 No center banner. Rifle and reticle stay.
+- I6-3 HUD left stack: HP N / AMMO n/10 / objective. Dim CLEAR THE ROOM. On kill: CLEARED bright, hold 3s, then dummy resets and line goes dim CLEAR THE ROOM.
+- I6-4 Player death: freeze ~1s, respawn, dummy resets, line stays CLEAR THE ROOM. No 3s wait.
+- I6-5 Capture, jump, recoil/flash/mag 10, cover unchanged. No extra geo.
+- I6-6 README clone path is `iter/I-6`. STUDIO.md current state is I-6.
+
 ## I-5 — 2026-08-29
 
-Branch `iter/I-5` from `382062c`. Pike numbers.
-
-- I5-1 Recoil: 1.8° pitch up per shot, ±0.35° random yaw, recover ~0.18s. Viewmodel kicks. One shot, one kick.
-- I5-2 Unlit muzzle flash at the barrel, 0.09 s. Dummy hit flash stays 0.22 s white.
-- I5-3 Mag 10. Empty mag auto-starts the 1.2 s reload. R also reloads. Walk/look live. Fire blocked until it finishes.
-- I5-4 HUD `AMMO n/10` under HP, same size. No mag icon. HP N and + reticle kept.
-- I5-5 Capture-then-fight, jump, dummy 3-hit, cover, rifle silhouette, Esc, death/respawn unchanged. No extra geo.
-- I5-6 README clone path is `iter/I-5`. STUDIO.md current state is I-5.
-
-## I-4 — 2026-08-29
-
-Dark rifle, three cover boxes, dummy head.
+Pike recoil, mag 10, muzzle flash.
