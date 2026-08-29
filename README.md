@@ -1,39 +1,40 @@
 # Iron Saint
 
-FPS Studio **Iron Saint**, Iteration **I-0**. Engine: **Godot 4.3** (GDScript, Compatibility / GL Compatibility renderer). Walk and look in one empty enclosed room.
+FPS Studio **Iron Saint**, Iteration **I-1**. Engine: **Godot 4.3** (GDScript, GL Compatibility). Walk, look, shoot a dummy, take damage, die, respawn. Same room as I-0.
 
 ## Requirements
 
-- **Godot 4.3** (exact). Archive: https://godotengine.org/download/archive/4.3-stable/
-- Do not open this project in Godot 3.x or 4.2. Compatibility renderer is already selected in `project.godot`.
+- **Godot 4.3** (exact): https://godotengine.org/download/archive/4.3-stable/
+- Do not open in Godot 3.x or 4.2.
 
 ## Clone / open
 
 Repo: https://github.com/zachmofo/fps-studio  
-Branch: `iter/I-0` (do not use `main` for this slice).
+Branch: `iter/I-1` (do not use `main` or `iter/I-0` for this slice).
 
 ```
-git clone -b iter/I-0 https://github.com/zachmofo/fps-studio.git
+git clone -b iter/I-1 https://github.com/zachmofo/fps-studio.git
 cd fps-studio
 ```
 
-1. Install Godot 4.3.
-2. In Godot 4.3 choose **Import** and open `project.godot` at the repo root (this file sits next to `STUDIO.md`).
-3. Press **F5** (Play), or **Project → Run Project**. Main scene is `scenes/main.tscn`.
-4. **Left-click** the game window to capture the mouse.
-5. **WASD** walks relative to facing (~5 m/s). Mouse looks (yaw on the body, pitch on the camera). Pitch is clamped to about ±89°.
-6. **Esc** (`ui_cancel`) releases the cursor.
-7. **Quit:** close the game window, or **F8** (Stop) in the editor.
+1. Godot 4.3 → Import / open `project.godot`.
+2. **F5** (Play). Main scene: `scenes/main.tscn`.
+3. **Left-click** once to capture the mouse (this click does not shoot).
+4. **WASD** walk. **Mouse** look. **Left-click** while captured to fire a hitscan (~50 m, one shot per press).
+5. A rust-red dummy stands ~7 m in front of the orange spawn pad. **3 hits** kill it (white flash on hit).
+6. Dummy return-fires about once a second while both are alive. Top-left number is your HP (3). **0 HP** = death, then ~1 s later you respawn on the orange pad with 3 HP and the dummy is alive again. Mouse stays captured.
+7. **Esc** releases the cursor. Close the play window or **F8** to quit.
 
-Default mouse sensitivity is `0.0025` radians per pixel (`mouse_sensitivity` export on the Player node). Raw relative mouse motion; no smoothing or acceleration.
+Sensitivity: `0.0025` rad/pixel on Player. Raw mouse, no accel.
 
-## I-0 changelog
+## I-1 changelog
 
-I-0 (2026-08-28) ships a bootable Godot 4.3 project named Iron Saint: a ~20×20 m enclosed room with collision on floor, walls, and ceiling; a visible spawn marker; and a first-person `CharacterBody3D` that walks with gravity (no jump) and raw mouse look (click to capture, Esc to release). Tickets I0-1 through I0-5. https://github.com/zachmofo/fps-studio branch `iter/I-0`.
+Fire (captured LMB, no ammo/recoil), one dummy, 3-hit kill with flash, dummy return fire, 3 HP, die/respawn on the orange marker (spawn lifted a couple cm), health integer, RTF `studio.md` removed so `STUDIO.md` is the only studio file.
 
 ## Known issues
 
-- The cursor is visible until left-click in the game window; Esc only releases, it does not quit.
-- No exported binary; run from the Godot 4.3 editor (F5).
-- Capsule vs box corners can feel sticky; the room has no cover or props.
-- Jump, sprint, shoot, HUD, enemy, and audio are out of I-0 scope (not missing features of this slice).
+- Capturing click does not fire (by design).
+- No reload, ammo, sprint, jump, recoil, ADS, audio, second dummy, cover, or settings.
+- Dummy does not walk or lead shots.
+- Capsule vs box corners can feel sticky.
+- No exported binary; run from the Godot 4.3 editor.
