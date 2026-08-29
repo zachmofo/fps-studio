@@ -1,40 +1,33 @@
 # Iron Saint
 
-FPS Studio **Iron Saint**, Iteration **I-1**. Engine: **Godot 4.3** (GDScript, GL Compatibility). Walk, look, shoot a dummy, take damage, die, respawn. Same room as I-0.
+FPS Studio **Iron Saint**, Iteration **I-1**. Engine: **Godot 4.3**. Walk, look, shoot a rust-red dummy, take damage, die, respawn.
 
 ## Requirements
 
 - **Godot 4.3** (exact): https://godotengine.org/download/archive/4.3-stable/
-- Do not open in Godot 3.x or 4.2.
 
 ## Clone / open
-
-Repo: https://github.com/zachmofo/fps-studio  
-Branch: `iter/I-1` (do not use `main` or `iter/I-0` for this slice).
 
 ```
 git clone -b iter/I-1 https://github.com/zachmofo/fps-studio.git
 cd fps-studio
 ```
 
-1. Godot 4.3 → Import / open `project.godot`.
-2. **F5** (Play). Main scene: `scenes/main.tscn`.
-3. **Left-click** once to capture the mouse (this click does not shoot).
-4. **WASD** walk. **Mouse** look. **Left-click** while captured to fire a hitscan (~50 m, one shot per press).
-5. A rust-red dummy stands ~7 m in front of the orange spawn pad. **3 hits** kill it (white flash on hit).
-6. Dummy return-fires about once a second while both are alive. Top-left number is your HP (3). **0 HP** = death, then ~1 s later you respawn on the orange pad with 3 HP and the dummy is alive again. Mouse stays captured.
-7. **Esc** releases the cursor. Close the play window or **F8** to quit.
+1. Godot 4.3 → open `project.godot` → **F5**.
+2. Mouse starts **visible**. **Left-click once** to capture (this click does **not** fire).
+3. **WASD** walk. **Mouse** look. White crosshair is center of view.
+4. **Left-click while captured** fires a hitscan (~50 m, one shot per press).
+5. Rust-red dummy ~7 m ahead. **3 hits** kill it (white flash). Dummy return-fires ~1 s while both live.
+6. Top-left **HP 3**. At **HP 0** you die, cannot walk for ~1 s, then respawn on the orange pad with HP 3 and a live dummy. Mouse stays captured after death.
+7. **Esc** frees the cursor. Recapture with left-click (no shot). **F8** / close window quits.
 
-Sensitivity: `0.0025` rad/pixel on Player. Raw mouse, no accel.
+## I-1 changelog (fix pass)
 
-## I-1 changelog
-
-Fire (captured LMB, no ammo/recoil), one dummy, 3-hit kill with flash, dummy return fire, 3 HP, die/respawn on the orange marker (spawn lifted a couple cm), health integer, RTF `studio.md` removed so `STUDIO.md` is the only studio file.
+I1-7 dummy.gd types so the script loads (3-hit kill, flash, return fire, reset). I1-8 first spawn mouse visible; death recaptures. I1-9 rust-red mesh in dummy.tscn. I1-10 `HP 3` label. I1-11 center reticle. I1-12 no WASD while dead. I1-13 README matches play.
 
 ## Known issues
 
-- Capturing click does not fire (by design).
-- No reload, ammo, sprint, jump, recoil, ADS, audio, second dummy, cover, or settings.
+- No viewmodel, recoil, reload, sprint, jump, ammo, audio, or second dummy.
 - Dummy does not walk or lead shots.
 - Capsule vs box corners can feel sticky.
-- No exported binary; run from the Godot 4.3 editor.
+- Editor F5 only.

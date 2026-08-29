@@ -22,6 +22,7 @@ var _can_fire: bool = true
 
 func _ready() -> void:
 	add_to_group("player")
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 
 
@@ -86,25 +87,34 @@ func _die() -> void:
 	died.emit()
 
 
-func respawn_at(origin: Vector3) -> void:
+func respawn_at(origin: Vector3, capture_mouse: bool = true) -> void:
 	global_position = origin
 	velocity = Vector3.ZERO
 	hp = MAX_HP
 	_dead = false
 	_can_fire = true
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if capture_mouse:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 
 
 func _update_hp() -> void:
 	if _hp_label:
-		_hp_label.text = str(hp)
+		_hp_label.text = "HP %d" % hp
 
 
 func _physics_process(delta: float) -> void:
 	var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+
+	if _dead:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction := transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
