@@ -20,10 +20,12 @@ const WORLD_AND_DUMMY := 1 | 4
 var hp: int = MAX_HP
 var _dead: bool = false
 var _can_fire: bool = true
+var _gravity: float = 9.8
 
 
 func _ready() -> void:
 	add_to_group("player")
+	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 
@@ -58,17 +60,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _fire() -> void:
-	var space := get_world_3d().direct_space_state
-	var from := _camera.global_position
-	var to := from + (-_camera.global_transform.basis.z) * HITSCAN_RANGE
-	var q := PhysicsRayQueryParameters3D.create(from, to)
+	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var from: Vector3 = _camera.global_position
+	var to: Vector3 = from + (-_camera.global_transform.basis.z) * HITSCAN_RANGE
+	var q: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(from, to)
 	q.exclude = [get_rid()]
 	q.collision_mask = WORLD_AND_DUMMY
-	var hit := space.intersect_ray(q)
+	var hit: Dictionary = space.intersect_ray(q)
 	if hit.is_empty():
 		return
-	var col = hit.get("collider")
-	if col and col.has_method("receive_hit"):
+	var col: Object = hit.get("collider") as Object
+	if col != null and col.has_method("receive_hit"):
 		col.receive_hit()
 
 
@@ -118,9 +120,8 @@ func _update_hp() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= _gravity * delta
 
 	if _dead:
 		velocity.x = 0.0
@@ -128,8 +129,8 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var direction := transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
+	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction: Vector3 = transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	if direction.length_squared() > 0.0:
 		direction = direction.normalized()

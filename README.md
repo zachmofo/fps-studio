@@ -1,11 +1,11 @@
 # Iron Saint
 
-FPS Studio **Iron Saint**, Iteration **I-3**. Engine: **Godot 4.3**. Walk, jump, look, shoot a walking rust-red dummy, take damage, die, respawn.
+FPS Studio **Iron Saint**, Iteration **I-3** cleanup. Engine: **Godot 4.3**. Walk, jump, look, shoot a walking rust-red dummy, take damage, die, respawn.
 
 ## Clone / open
 
 ```
-git clone -b iter/I-3 https://github.com/zachmofo/fps-studio.git
+git clone -b iter/I-3-clean https://github.com/zachmofo/fps-studio.git
 cd fps-studio
 ```
 
@@ -19,9 +19,9 @@ Godot **4.3** → open `project.godot` → **F5**.
 6. **HP 0**: die, no walk ~1 s, respawn on the orange pad, dummy back on its line, mouse stays captured.
 7. **Esc** frees the cursor and pauses dummy fire. Recapture is grab-only.
 
-## I-3 changelog
+## I-3-clean changelog
 
-Space jump. Dummy CharacterBody3D strafes on X. Player capsule 0.35 + safe_margin 0.08. I-2 combat still holds.
+Typed GDScript. Gravity cached. Play is the same as `f0911cc`. No new features.
 
 ## Known issues
 

@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _spawn_origin() -> Vector3:
-	var p := _spawn.global_position
+	var p: Vector3 = _spawn.global_position
 	p.y = SPAWN_LIFT
 	return p
 

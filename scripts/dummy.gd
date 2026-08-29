@@ -15,6 +15,7 @@ var _acc: float = 0.0
 var _was_captured: bool = false
 var _home: Vector3 = Vector3.ZERO
 var _dir: float = 1.0
+var _gravity: float = 9.8
 
 @onready var _mesh: MeshInstance3D = $MeshInstance3D
 @onready var _col: CollisionShape3D = $CollisionShape3D
@@ -23,6 +24,7 @@ var _dir: float = 1.0
 func _ready() -> void:
 	add_to_group("dummy")
 	_home = global_position
+	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	_mesh.set_surface_override_material(0, null)
 	_set_albedo(BASE_COLOR)
 
@@ -59,9 +61,8 @@ func reset() -> void:
 func _physics_process(delta: float) -> void:
 	if not _alive:
 		return
-	var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= _gravity * delta
 	if global_position.x > PATROL_X:
 		_dir = -1.0
 	elif global_position.x < -PATROL_X:
@@ -86,21 +87,22 @@ func _return_fire() -> void:
 	var players: Array = get_tree().get_nodes_in_group("player")
 	if players.is_empty():
 		return
-	var body := players[0] as Node3D
+	var body: Node3D = players[0] as Node3D
 	if body == null:
 		return
 	if not body.has_method("is_alive") or not body.is_alive():
 		return
 	var from: Vector3 = global_position + Vector3(0.0, 1.4, 0.0)
 	var target: Vector3 = body.global_position + Vector3(0.0, 1.6, 0.0)
-	var space := get_world_3d().direct_space_state
-	var q := PhysicsRayQueryParameters3D.create(from, target)
+	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var q: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(from, target)
 	q.exclude = [get_rid()]
 	q.collision_mask = WORLD_AND_PLAYER
-	var hit := space.intersect_ray(q)
+	var hit: Dictionary = space.intersect_ray(q)
 	if hit.is_empty():
 		return
-	if hit.get("collider") == body and body.has_method("take_damage"):
+	var col: Object = hit.get("collider") as Object
+	if col == body and body.has_method("take_damage"):
 		body.take_damage(1)
 
 
@@ -113,10 +115,10 @@ func _flash() -> void:
 
 func _set_albedo(c: Color) -> void:
 	_mesh.set_surface_override_material(0, null)
-	var prim := _mesh.mesh as PrimitiveMesh
+	var prim: PrimitiveMesh = _mesh.mesh as PrimitiveMesh
 	if prim == null:
 		return
-	var mat := prim.material as StandardMaterial3D
+	var mat: StandardMaterial3D = prim.material as StandardMaterial3D
 	if mat == null:
 		mat = StandardMaterial3D.new()
 		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
