@@ -4,10 +4,13 @@ const MAX_HP := 3
 const FIRE_INTERVAL := 1.0
 const WORLD_AND_PLAYER := 1 | 2
 const BASE_COLOR := Color(0.72, 0.22, 0.18)
+const FLASH_COLOR := Color(1, 1, 1)
+const FLASH_SEC := 0.22
 
 var hp: int = MAX_HP
 var _alive: bool = true
 var _acc: float = 0.0
+var _was_captured: bool = false
 
 @onready var _mesh: MeshInstance3D = $MeshInstance3D
 @onready var _col: CollisionShape3D = $CollisionShape3D
@@ -15,7 +18,8 @@ var _acc: float = 0.0
 
 func _ready() -> void:
 	add_to_group("dummy")
-	_ensure_mat(BASE_COLOR)
+	_mesh.set_surface_override_material(0, null)
+	_set_albedo(BASE_COLOR)
 
 
 func receive_hit() -> void:
@@ -37,6 +41,7 @@ func reset() -> void:
 	hp = MAX_HP
 	_alive = true
 	_acc = 0.0
+	_was_captured = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	_mesh.visible = true
 	_col.disabled = false
 	_set_albedo(BASE_COLOR)
@@ -44,6 +49,12 @@ func reset() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not _alive:
+		return
+	var captured: bool = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+	if captured and not _was_captured:
+		_acc = 0.0
+	_was_captured = captured
+	if not captured:
 		return
 	_acc += delta
 	if _acc >= FIRE_INTERVAL:
@@ -74,20 +85,20 @@ func _return_fire() -> void:
 
 
 func _flash() -> void:
-	_set_albedo(Color(1, 1, 1))
-	await get_tree().create_timer(0.08).timeout
+	_set_albedo(FLASH_COLOR)
+	await get_tree().create_timer(FLASH_SEC).timeout
 	if _alive:
 		_set_albedo(BASE_COLOR)
 
 
-func _ensure_mat(c: Color) -> void:
-	var mat := _mesh.get_surface_override_material(0)
+func _set_albedo(c: Color) -> void:
+	_mesh.set_surface_override_material(0, null)
+	var prim := _mesh.mesh as PrimitiveMesh
+	if prim == null:
+		return
+	var mat := prim.material as StandardMaterial3D
 	if mat == null:
 		mat = StandardMaterial3D.new()
 		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		_mesh.set_surface_override_material(0, mat)
+		prim.material = mat
 	mat.albedo_color = c
-
-
-func _set_albedo(c: Color) -> void:
-	_ensure_mat(c)

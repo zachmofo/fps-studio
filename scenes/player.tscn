@@ -55,3 +55,9 @@ offset_right = 1.0
 offset_bottom = 8.0
 color = Color(1, 1, 1, 0.85)
 mouse_filter = 2
+
+[node name="HitFlash" type="ColorRect" parent="Hud"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.85, 0.08, 0.06, 0)

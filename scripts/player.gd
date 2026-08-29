@@ -14,6 +14,7 @@ const WORLD_AND_DUMMY := 1 | 4
 
 @onready var _camera: Camera3D = $Camera3D
 @onready var _hp_label: Label = $Hud/HpLabel
+@onready var _hit_flash: ColorRect = $Hud/HitFlash
 
 var hp: int = MAX_HP
 var _dead: bool = false
@@ -75,8 +76,18 @@ func take_damage(amount: int) -> void:
 		return
 	hp = maxi(hp - amount, 0)
 	_update_hp()
+	_player_hit_flash()
 	if hp <= 0:
 		_die()
+
+
+func _player_hit_flash() -> void:
+	if _hit_flash == null:
+		return
+	_hit_flash.color = Color(0.85, 0.08, 0.06, 0.5)
+	await get_tree().create_timer(0.15).timeout
+	if _hit_flash:
+		_hit_flash.color = Color(0.85, 0.08, 0.06, 0.0)
 
 
 func _die() -> void:
