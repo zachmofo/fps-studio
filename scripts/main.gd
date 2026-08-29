@@ -9,7 +9,8 @@ const SPAWN_LIFT := 0.05
 
 func _ready() -> void:
 	_player.died.connect(_on_player_died)
-	_player.respawn_at(_spawn_origin())
+	_player.global_position = _spawn_origin()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func _spawn_origin() -> Vector3:
@@ -20,5 +21,6 @@ func _spawn_origin() -> Vector3:
 
 func _on_player_died() -> void:
 	await get_tree().create_timer(1.0).timeout
-	_player.respawn_at(_spawn_origin())
-	_dummy.reset()
+	_player.respawn_at(_spawn_origin(), true)
+	if _dummy.has_method("reset"):
+		_dummy.reset()

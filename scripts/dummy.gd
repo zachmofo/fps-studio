@@ -3,11 +3,11 @@ extends StaticBody3D
 const MAX_HP := 3
 const FIRE_INTERVAL := 1.0
 const WORLD_AND_PLAYER := 1 | 2
+const BASE_COLOR := Color(0.72, 0.22, 0.18)
 
 var hp: int = MAX_HP
 var _alive: bool = true
 var _acc: float = 0.0
-var _base_color: Color = Color(0.72, 0.22, 0.18)
 
 @onready var _mesh: MeshInstance3D = $MeshInstance3D
 @onready var _col: CollisionShape3D = $CollisionShape3D
@@ -15,10 +15,7 @@ var _base_color: Color = Color(0.72, 0.22, 0.18)
 
 func _ready() -> void:
 	add_to_group("dummy")
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.albedo_color = _base_color
-	_mesh.set_surface_override_material(0, mat)
+	_ensure_mat(BASE_COLOR)
 
 
 func receive_hit() -> void:
@@ -42,7 +39,7 @@ func reset() -> void:
 	_acc = 0.0
 	_mesh.visible = true
 	_col.disabled = false
-	_set_albedo(_base_color)
+	_set_albedo(BASE_COLOR)
 
 
 func _physics_process(delta: float) -> void:
@@ -55,14 +52,16 @@ func _physics_process(delta: float) -> void:
 
 
 func _return_fire() -> void:
-	var players := get_tree().get_nodes_in_group("player")
+	var players: Array = get_tree().get_nodes_in_group("player")
 	if players.is_empty():
 		return
-	var player = players[0]
-	if not player.has_method("is_alive") or not player.is_alive():
+	var body := players[0] as Node3D
+	if body == null:
 		return
-	var from := global_position + Vector3(0.0, 1.4, 0.0)
-	var target := player.global_position + Vector3(0.0, 1.6, 0.0)
+	if not body.has_method("is_alive") or not body.is_alive():
+		return
+	var from: Vector3 = global_position + Vector3(0.0, 1.4, 0.0)
+	var target: Vector3 = body.global_position + Vector3(0.0, 1.6, 0.0)
 	var space := get_world_3d().direct_space_state
 	var q := PhysicsRayQueryParameters3D.create(from, target)
 	q.exclude = [get_rid()]
@@ -70,18 +69,25 @@ func _return_fire() -> void:
 	var hit := space.intersect_ray(q)
 	if hit.is_empty():
 		return
-	if hit.get("collider") == player and player.has_method("take_damage"):
-		player.take_damage(1)
+	if hit.get("collider") == body and body.has_method("take_damage"):
+		body.take_damage(1)
 
 
 func _flash() -> void:
 	_set_albedo(Color(1, 1, 1))
 	await get_tree().create_timer(0.08).timeout
 	if _alive:
-		_set_albedo(_base_color)
+		_set_albedo(BASE_COLOR)
+
+
+func _ensure_mat(c: Color) -> void:
+	var mat := _mesh.get_surface_override_material(0)
+	if mat == null:
+		mat = StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		_mesh.set_surface_override_material(0, mat)
+	mat.albedo_color = c
 
 
 func _set_albedo(c: Color) -> void:
-	var mat = _mesh.get_surface_override_material(0)
-	if mat:
-		mat.albedo_color = c
+	_ensure_mat(c)
