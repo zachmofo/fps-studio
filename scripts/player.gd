@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-## I-6: walk/look/jump, heavy rifle, clear the room.
+## I-7: walk/sprint/jump, heavy rifle, clear the room.
 
 signal died
 
@@ -21,6 +21,7 @@ const OBJ_BRIGHT := Color(1, 1, 1, 1)
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
+@export var sprint_speed: float = 8.0
 @export var jump_velocity: float = 5.4
 
 @onready var _camera: Camera3D = $Camera3D
@@ -246,18 +247,24 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
+	var jumping: bool = is_on_floor() and Input.is_action_just_pressed("jump")
+	var grounded: bool = is_on_floor() and not jumping
+	var speed: float = walk_speed
+	if grounded and Input.is_action_pressed("sprint") and not Input.is_action_pressed("fire"):
+		speed = sprint_speed
+
 	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction: Vector3 = transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	if direction.length_squared() > 0.0:
 		direction = direction.normalized()
-		velocity.x = direction.x * walk_speed
-		velocity.z = direction.z * walk_speed
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
 
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
+	if jumping:
 		velocity.y = jump_velocity
 
 	move_and_slide()

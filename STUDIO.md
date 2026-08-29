@@ -21,20 +21,19 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 6 — I-6
+## Iteration 7 — I-7
 
-**Goal:** Dummy dies, you clear the room. Same 20x20. Same rifle. No new geo.
+**Goal:** Hold Shift to sprint. Same room. Same rifle. No new geo.
 
-**Not this time:** sprint, 3D map, extra cover, dummy uses cover, second dummy, audio, ADS, merge.
+**Not this time:** aerial 3D, dummy uses cover, audio, ADS, coyote, second dummy, merge.
 
 ### Tickets
 
-- I6-1 Dummy stays down until reset
-- I6-2 No center banner
-- I6-3 Objective under AMMO: CLEAR THE ROOM / CLEARED 3s then dummy resets
-- I6-4 Player death resets dummy, no 3s wait
-- I6-5 Capture, jump, gun, cover unchanged
-- I6-6 README, STUDIO.md, CHANGELOG
+- I7-1 Shift sprint 8.0 / walk 5.0
+- I7-2 No air sprint. Shot cancels sprint. No FOV punch, slide, stamina
+- I7-3 Gun, capture, CLEARED 3s, death skip unchanged
+- I7-4 HUD unchanged, no sprint meter
+- I7-5 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +42,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-08-29 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-6 on `iter/I-6` |
+| Iteration | I-7 on `iter/I-7` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
