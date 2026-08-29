@@ -10,8 +10,8 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 | Zach | Owner. Merge, publish, spend, v0. | Day-to-day tickets. |
 | Reed | PM. Scope, tickets, review. | Production game code. |
 | Vega | Sole implementer. | Invent features. Merge. |
-| Pike | Feel/UX. Reports to Reed. | Game code. Tickets to Vega. |
-| Wren | Stability. Reports to Reed. | Game code. Gun-feel. |
+| Pike | Design (feel, body, cover, gun, HUD). Notes to Reed. | Game code. Tickets to Vega. Test. |
+| Wren | Only tester. Stability, regressions. Reports to Reed. | Game code. Gun-feel. |
 
 ## Fantasy
 
@@ -21,28 +21,28 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 1 — I-1
+## Iteration 5 — I-5
 
-**Goal:** Shoot a dummy, take damage, die, respawn. Same room.
+**Goal:** The dark rifle kicks. Recoil, muzzle flash, ammo. Same room. Same dummy. Same cover.
 
-**Not this time:** sprint, jump, reload, ammo, recoil, ADS, audio, second dummy, cover, win banner, settings.
+**Not this time:** sprint, win banner, dummy uses cover, 3D map rebuild, audio, ADS, second dummy, merge.
 
 ### Tickets
 
-- I1-1 Fire
-- I1-2 Dummy
-- I1-3 Hit + dummy death
-- I1-4 Player damage
-- I1-5 Die/respawn (spawn a couple cm above floor)
-- I1-6 README; delete RTF studio.md
+- I5-1 Recoil (camera + viewmodel)
+- I5-2 Muzzle flash
+- I5-3 Mag 10, R reload 1.2 s, dry fire no ray
+- I5-4 HUD `AMMO n/10`
+- I5-5 Capture, jump, dummy 3-hit, cover, rifle, Esc, death/respawn unchanged
+- I5-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
 | Field | Value |
 | --- | --- |
-| Date | 2026-08-28 |
+| Date | 2026-08-29 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-1 on `iter/I-1` |
+| Iteration | I-5 on `iter/I-5` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
