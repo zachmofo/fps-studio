@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-## I-1: walk/look plus hitscan fire, 3 HP, die/respawn.
+## I-3: walk/look/jump, hitscan, 3 HP, die/respawn.
 
 signal died
 
@@ -11,6 +11,7 @@ const WORLD_AND_DUMMY := 1 | 4
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
+@export var jump_velocity: float = 5.4
 
 @onready var _camera: Camera3D = $Camera3D
 @onready var _hp_label: Label = $Hud/HpLabel
@@ -137,5 +138,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
+
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		velocity.y = jump_velocity
 
 	move_and_slide()

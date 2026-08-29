@@ -1,14 +1,15 @@
 # Changelog
 
+## I-3 — 2026-08-29
+
+Branch `iter/I-3` from `4c01747`.
+
+- Space jump on the floor. Same room. No jump while dead.
+- Dummy is a CharacterBody3D. Strafes on X (±6 m). Still 3 hits to kill.
+- Player capsule radius 0.35, safe_margin 0.08, floor snap 0.2.
+- I-2 capture gate, 0.22s dummy flash, player red hit flash kept.
+- README clone path is `iter/I-3`.
+
 ## I-2 — 2026-08-28
 
-Branch `iter/I-2` from `91f1a58`.
-
-- I2-1 Dummy does not return-fire until mouse is captured. `_acc` resets on capture so the first dummy shot is ~1 s later, not on the grab click.
-- I2-2 Dummy hit flash: mesh albedo white for 0.22 s, then rust-red. Color is on the PrimitiveMesh material.
-- I2-3 Player hit cue: full-screen red ColorRect ~0.15 s. HP label still updates.
-- I2-4 README.
-
-## I-1 fix — 2026-08-28
-
-See `iter/I-1` SHA `91f1a58`.
+Branch `iter/I-2` from `91f1a58`. Capture-gated dummy fire, 0.22s mesh flash, player hit flash.

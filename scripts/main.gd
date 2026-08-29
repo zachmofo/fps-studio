@@ -3,7 +3,7 @@ extends Node3D
 const SPAWN_LIFT := 0.05
 
 @onready var _player: CharacterBody3D = $Player
-@onready var _dummy: StaticBody3D = $Dummy
+@onready var _dummy: CharacterBody3D = $Dummy
 @onready var _spawn: MeshInstance3D = $SpawnMarker
 
 
