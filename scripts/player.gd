@@ -1,33 +1,54 @@
 extends CharacterBody3D
 
-## I-3: walk/look/jump, hitscan, 3 HP, die/respawn.
+## I-5: walk/look/jump, heavy rifle recoil, mag 10, die/respawn.
 
 signal died
 
 const MAX_HP := 3
+const MAG_SIZE := 10
+const RELOAD_SEC := 1.2
 const PITCH_LIMIT := deg_to_rad(89.0)
 const HITSCAN_RANGE := 50.0
 const WORLD_AND_DUMMY := 1 | 4
+const RECOIL_PITCH := deg_to_rad(1.8)
+const RECOIL_YAW := deg_to_rad(0.35)
+const RECOIL_SETTLE := 0.18
+const RIFLE_KICK_PITCH := deg_to_rad(3.2)
+const RIFLE_KICK_Z := 0.028
+const FLASH_SEC := 0.09
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
 @export var jump_velocity: float = 5.4
 
 @onready var _camera: Camera3D = $Camera3D
+@onready var _rifle: Node3D = $Camera3D/Rifle
+@onready var _muzzle_flash: MeshInstance3D = $Camera3D/Rifle/MuzzleFlash
 @onready var _hp_label: Label = $Hud/HpLabel
+@onready var _ammo_label: Label = $Hud/AmmoLabel
 @onready var _hit_flash: ColorRect = $Hud/HitFlash
 
 var hp: int = MAX_HP
+var ammo: int = MAG_SIZE
 var _dead: bool = false
-var _can_fire: bool = true
+var _reloading: bool = false
 var _gravity: float = 9.8
+var _aim_pitch: float = 0.0
+var _recoil_pitch: float = 0.0
+var _recoil_yaw: float = 0.0
+var _rifle_kick: float = 0.0
+var _rifle_rest: Transform3D = Transform3D.IDENTITY
 
 
 func _ready() -> void:
 	add_to_group("player")
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
+	_rifle_rest = _rifle.transform
+	if _muzzle_flash:
+		_muzzle_flash.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
+	_update_ammo()
 
 
 func is_alive() -> bool:
@@ -40,26 +61,47 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
+	if event.is_action_pressed("reload"):
+		_start_reload()
+		get_viewport().set_input_as_handled()
+		return
+
 	if event.is_action_pressed("fire"):
 		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			get_viewport().set_input_as_handled()
 			return
-		if _can_fire and not _dead:
-			_fire()
+		if not _dead:
+			_try_fire()
 		get_viewport().set_input_as_handled()
 		return
 
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
-		_camera.rotation.x = clampf(
-			_camera.rotation.x - event.relative.y * mouse_sensitivity,
+		_aim_pitch = clampf(
+			_aim_pitch - event.relative.y * mouse_sensitivity,
 			-PITCH_LIMIT,
 			PITCH_LIMIT
 		)
+		_apply_view()
 
 
-func _fire() -> void:
+func _try_fire() -> void:
+	if _reloading:
+		return
+	if ammo <= 0:
+		_start_reload()
+		return
+	ammo -= 1
+	if ammo <= 0:
+		_start_reload()
+	_update_ammo()
+	_kick()
+	_show_muzzle()
+	_hitscan()
+
+
+func _hitscan() -> void:
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var from: Vector3 = _camera.global_position
 	var to: Vector3 = from + (-_camera.global_transform.basis.z) * HITSCAN_RANGE
@@ -72,6 +114,37 @@ func _fire() -> void:
 	var col: Object = hit.get("collider") as Object
 	if col != null and col.has_method("receive_hit"):
 		col.receive_hit()
+
+
+func _kick() -> void:
+	_recoil_pitch += RECOIL_PITCH
+	_recoil_yaw += randf_range(-RECOIL_YAW, RECOIL_YAW)
+	_rifle_kick = 1.0
+	_apply_view()
+
+
+func _show_muzzle() -> void:
+	if _muzzle_flash == null:
+		return
+	_muzzle_flash.visible = true
+	await get_tree().create_timer(FLASH_SEC).timeout
+	if _muzzle_flash:
+		_muzzle_flash.visible = false
+
+
+func _start_reload() -> void:
+	if _dead or _reloading:
+		return
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
+	_reloading = true
+	await get_tree().create_timer(RELOAD_SEC).timeout
+	if _dead:
+		_reloading = false
+		return
+	ammo = MAG_SIZE
+	_reloading = false
+	_update_ammo()
 
 
 func take_damage(amount: int) -> void:
@@ -95,7 +168,7 @@ func _player_hit_flash() -> void:
 
 func _die() -> void:
 	_dead = true
-	_can_fire = false
+	_reloading = false
 	hp = 0
 	_update_hp()
 	died.emit()
@@ -105,13 +178,19 @@ func respawn_at(origin: Vector3, capture_mouse: bool = true) -> void:
 	global_position = origin
 	velocity = Vector3.ZERO
 	hp = MAX_HP
+	ammo = MAG_SIZE
 	_dead = false
-	_can_fire = true
+	_reloading = false
+	_recoil_pitch = 0.0
+	_recoil_yaw = 0.0
+	_rifle_kick = 0.0
 	if capture_mouse:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
+	_update_ammo()
+	_apply_view()
 
 
 func _update_hp() -> void:
@@ -119,7 +198,29 @@ func _update_hp() -> void:
 		_hp_label.text = "HP %d" % hp
 
 
+func _update_ammo() -> void:
+	if _ammo_label:
+		_ammo_label.text = "AMMO %d/%d" % [ammo, MAG_SIZE]
+
+
+func _apply_view() -> void:
+	_camera.rotation.x = clampf(_aim_pitch - _recoil_pitch, -PITCH_LIMIT, PITCH_LIMIT)
+	_camera.rotation.y = _recoil_yaw
+	if _rifle:
+		var kick_xf: Transform3D = _rifle_rest
+		kick_xf.origin.z += RIFLE_KICK_Z * _rifle_kick
+		kick_xf.origin.y += 0.012 * _rifle_kick
+		_rifle.transform = kick_xf
+		_rifle.rotation.x = _rifle_rest.basis.get_euler().x - RIFLE_KICK_PITCH * _rifle_kick
+
+
 func _physics_process(delta: float) -> void:
+	if _recoil_pitch != 0.0 or _recoil_yaw != 0.0 or _rifle_kick > 0.0:
+		_recoil_pitch = move_toward(_recoil_pitch, 0.0, (RECOIL_PITCH / RECOIL_SETTLE) * delta)
+		_recoil_yaw = move_toward(_recoil_yaw, 0.0, (RECOIL_YAW / RECOIL_SETTLE) * delta)
+		_rifle_kick = move_toward(_rifle_kick, 0.0, (1.0 / RECOIL_SETTLE) * delta)
+		_apply_view()
+
 	if not is_on_floor():
 		velocity.y -= _gravity * delta
 

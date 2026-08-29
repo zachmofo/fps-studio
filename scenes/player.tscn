@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 
@@ -25,6 +25,14 @@ size = Vector3(0.05, 0.08, 0.16)
 [sub_resource type="BoxMesh" id="BoxMesh_mag"]
 material = SubResource("Mat_rifle")
 size = Vector3(0.04, 0.11, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="Mat_flash"]
+shading_mode = 0
+albedo_color = Color(1, 0.82, 0.35, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_flash"]
+material = SubResource("Mat_flash")
+size = Vector3(0.04, 0.04, 0.06)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -60,6 +68,11 @@ mesh = SubResource("BoxMesh_stock")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09, 0.02)
 mesh = SubResource("BoxMesh_mag")
 
+[node name="MuzzleFlash" type="MeshInstance3D" parent="Camera3D/Rifle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.54)
+visible = false
+mesh = SubResource("BoxMesh_flash")
+
 [node name="Hud" type="CanvasLayer" parent="."]
 
 [node name="HpLabel" type="Label" parent="Hud"]
@@ -69,6 +82,15 @@ offset_right = 140.0
 offset_bottom = 44.0
 theme_override_font_sizes/font_size = 22
 text = "HP 3"
+mouse_filter = 2
+
+[node name="AmmoLabel" type="Label" parent="Hud"]
+offset_left = 16.0
+offset_top = 42.0
+offset_right = 200.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 22
+text = "AMMO 10/10"
 mouse_filter = 2
 
 [node name="Reticle" type="Control" parent="Hud"]
