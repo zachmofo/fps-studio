@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-## I-5: walk/look/jump, heavy rifle recoil, mag 10, die/respawn.
+## I-6: walk/look/jump, heavy rifle, clear the room.
 
 signal died
 
@@ -16,6 +16,8 @@ const RECOIL_SETTLE := 0.18
 const RIFLE_KICK_PITCH := deg_to_rad(3.2)
 const RIFLE_KICK_Z := 0.028
 const FLASH_SEC := 0.09
+const OBJ_DIM := Color(0.7, 0.7, 0.7, 1)
+const OBJ_BRIGHT := Color(1, 1, 1, 1)
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
@@ -26,6 +28,7 @@ const FLASH_SEC := 0.09
 @onready var _muzzle_flash: MeshInstance3D = $Camera3D/Rifle/MuzzleFlash
 @onready var _hp_label: Label = $Hud/HpLabel
 @onready var _ammo_label: Label = $Hud/AmmoLabel
+@onready var _objective: Label = $Hud/ObjectiveLabel
 @onready var _hit_flash: ColorRect = $Hud/HitFlash
 
 var hp: int = MAX_HP
@@ -49,6 +52,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 	_update_ammo()
+	set_objective_cleared(false)
 
 
 func is_alive() -> bool:
@@ -190,6 +194,7 @@ func respawn_at(origin: Vector3, capture_mouse: bool = true) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 	_update_ammo()
+	set_objective_cleared(false)
 	_apply_view()
 
 
@@ -201,6 +206,17 @@ func _update_hp() -> void:
 func _update_ammo() -> void:
 	if _ammo_label:
 		_ammo_label.text = "AMMO %d/%d" % [ammo, MAG_SIZE]
+
+
+func set_objective_cleared(won: bool) -> void:
+	if _objective == null:
+		return
+	if won:
+		_objective.text = "CLEARED"
+		_objective.add_theme_color_override("font_color", OBJ_BRIGHT)
+	else:
+		_objective.text = "CLEAR THE ROOM"
+		_objective.add_theme_color_override("font_color", OBJ_DIM)
 
 
 func _apply_view() -> void:
