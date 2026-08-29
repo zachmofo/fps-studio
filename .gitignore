@@ -1,0 +1,23 @@
+# Godot 4 generated import cache and editor state
+.godot/
+
+# Godot 3 leftover (this project is 4.3)
+.import/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# Optional editor/export local files
+export_presets.cfg
+*.translation
+
+# Local export artifacts (not part of I-0)
+*.apk
+*.aab
+*.ipa
+*.exe
+*.pck
+*.zip
