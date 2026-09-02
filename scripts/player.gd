@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-## I-7: walk/sprint/jump, heavy rifle, clear the room.
+## I-9: walk/sprint/jump, heavy rifle, cover dummy, gun audio.
 
 signal died
 
@@ -18,6 +18,11 @@ const RIFLE_KICK_Z := 0.028
 const FLASH_SEC := 0.09
 const OBJ_DIM := Color(0.7, 0.7, 0.7, 1)
 const OBJ_BRIGHT := Color(1, 1, 1, 1)
+
+const SFX_FIRE: AudioStream = preload("res://audio/player_fire.tres")
+const SFX_DRY: AudioStream = preload("res://audio/dry_fire.tres")
+const SFX_RELOAD_MAG: AudioStream = preload("res://audio/reload_mag.tres")
+const SFX_RELOAD_CLOSE: AudioStream = preload("res://audio/reload_close.tres")
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
@@ -42,18 +47,36 @@ var _recoil_pitch: float = 0.0
 var _recoil_yaw: float = 0.0
 var _rifle_kick: float = 0.0
 var _rifle_rest: Transform3D = Transform3D.IDENTITY
+var _sfx_shot: AudioStreamPlayer
+var _sfx_reload: AudioStreamPlayer
 
 
 func _ready() -> void:
 	add_to_group("player")
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	_rifle_rest = _rifle.transform
+	_sfx_shot = _make_sfx("SfxShot")
+	_sfx_reload = _make_sfx("SfxReload")
 	if _muzzle_flash:
 		_muzzle_flash.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_update_hp()
 	_update_ammo()
 	set_objective_cleared(false)
+
+
+func _make_sfx(node_name: String) -> AudioStreamPlayer:
+	var p: AudioStreamPlayer = AudioStreamPlayer.new()
+	p.name = node_name
+	add_child(p)
+	return p
+
+
+func _play(player: AudioStreamPlayer, stream: AudioStream) -> void:
+	if player == null or stream == null:
+		return
+	player.stream = stream
+	player.play()
 
 
 func is_alive() -> bool:
@@ -95,12 +118,14 @@ func _try_fire() -> void:
 	if _reloading:
 		return
 	if ammo <= 0:
+		_play(_sfx_shot, SFX_DRY)
 		_start_reload()
 		return
 	ammo -= 1
 	if ammo <= 0:
 		_start_reload()
 	_update_ammo()
+	_play(_sfx_shot, SFX_FIRE)
 	_kick()
 	_show_muzzle()
 	_hitscan()
@@ -143,7 +168,17 @@ func _start_reload() -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
 	_reloading = true
-	await get_tree().create_timer(RELOAD_SEC).timeout
+	await get_tree().create_timer(0.28).timeout
+	if _dead:
+		_reloading = false
+		return
+	_play(_sfx_reload, SFX_RELOAD_MAG)
+	await get_tree().create_timer(0.52).timeout
+	if _dead:
+		_reloading = false
+		return
+	_play(_sfx_reload, SFX_RELOAD_CLOSE)
+	await get_tree().create_timer(0.40).timeout
 	if _dead:
 		_reloading = false
 		return

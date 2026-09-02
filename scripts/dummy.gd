@@ -19,6 +19,10 @@ const BOX_HALF_Z := 0.35
 const CAPSULE_R := 0.4
 const ARRIVE_EPS := 0.15
 
+const SFX_FIRE: AudioStream = preload("res://audio/dummy_fire.tres")
+const SFX_HIT: AudioStream = preload("res://audio/dummy_hit.tres")
+const SFX_DEATH: AudioStream = preload("res://audio/dummy_death.tres")
+
 enum Phase { PATROL, OUT, IN }
 
 var hp: int = MAX_HP
@@ -32,6 +36,9 @@ var _phase: int = Phase.PATROL
 var _phase_t: float = 0.0
 var _hide: Vector3 = Vector3.ZERO
 var _peek: Vector3 = Vector3.ZERO
+var _sfx_shot: AudioStreamPlayer
+var _sfx_hit: AudioStreamPlayer
+var _sfx_death: AudioStreamPlayer
 
 @onready var _mesh: MeshInstance3D = $MeshInstance3D
 @onready var _head: MeshInstance3D = $Head
@@ -43,6 +50,9 @@ func _ready() -> void:
 	_home = global_position
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 	_bind_cover()
+	_sfx_shot = _make_sfx("SfxShot")
+	_sfx_hit = _make_sfx("SfxHit")
+	_sfx_death = _make_sfx("SfxDeath")
 	_mesh.set_surface_override_material(0, null)
 	_head.set_surface_override_material(0, null)
 	_set_mesh_albedo(_mesh, BASE_COLOR)
@@ -65,10 +75,25 @@ func _bind_cover() -> void:
 	_peek = Vector3(p.x - BOX_HALF_X - PEEK_PAST, p.y, _hide.z)
 
 
+func _make_sfx(node_name: String) -> AudioStreamPlayer:
+	var p: AudioStreamPlayer = AudioStreamPlayer.new()
+	p.name = node_name
+	add_child(p)
+	return p
+
+
+func _play(player: AudioStreamPlayer, stream: AudioStream) -> void:
+	if player == null or stream == null:
+		return
+	player.stream = stream
+	player.play()
+
+
 func receive_hit() -> void:
 	if not _alive:
 		return
 	hp -= 1
+	_play(_sfx_hit, SFX_HIT)
 	_flash()
 	if hp <= 0:
 		_die()
@@ -80,6 +105,7 @@ func _die() -> void:
 	_mesh.visible = false
 	_head.visible = false
 	_col.disabled = true
+	_play(_sfx_death, SFX_DEATH)
 	killed.emit()
 
 
@@ -182,6 +208,7 @@ func _return_fire() -> void:
 		return
 	if not body.has_method("is_alive") or not body.is_alive():
 		return
+	_play(_sfx_shot, SFX_FIRE)
 	var from: Vector3 = global_position + Vector3(0.0, 1.4, 0.0)
 	var target: Vector3 = body.global_position + Vector3(0.0, 1.6, 0.0)
 	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
