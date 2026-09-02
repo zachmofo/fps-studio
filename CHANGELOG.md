@@ -4,7 +4,7 @@
 
 Branch `iter/I-10` from `6fa3a6e`. Pike strip lock.
 
-- I10-1 Unlit fluorescent strips on the floor. 4 X + 4 Z, flush seams, skip the orange pad. Albedo Color(0.62, 0.82, 0.70), unshaded. No collision. No light nodes.
+- I10-1 Unlit fluorescent strips on the floor. 4 X + 4 Z, equally spaced 4m. Flush in the floor seams (not proud). Skip the orange pad. Albedo Color(0.62, 0.82, 0.70), unshaded, dim, no emission. No collision. No light nodes.
 - I10-2 Orange spawn pad, gray walls/ceiling, three cover boxes, dummy CoverMid: unchanged.
 - I10-3 Sprint, gun, audio, HUD, CLEARED: unchanged.
 - I10-4 README clone path is `iter/I-10`. STUDIO.md current state is I-10.

@@ -11,7 +11,7 @@ cd fps-studio
 
 Godot **4.3** → open `project.godot` → **F5**.
 
-1. Floor: unlit fluorescent grid, 4 strips X and 4 strips Z, `Color(0.62, 0.82, 0.70)`, flush seams. They skip the orange spawn pad. No extra collision.
+1. Floor: unlit fluorescent grid, 4 strips X and 4 strips Z at ±2/±6, `Color(0.62, 0.82, 0.70)`, flush in the floor (not proud). They skip the orange spawn pad. No extra collision.
 2. Mouse starts **visible**. Dummy strafes. Capture click is silent (no crack).
 3. Dummy takes CoverMid (right). Peek 0.7 m. Out 2.0 s / in 1.5 s.
 4. Captured fire: heavy crack. Dummy: thinner crack. Dry/empty: click. Hit thunk. Death thud. Reload mag-in then close.

@@ -98,42 +98,42 @@ mesh = SubResource("BoxMesh_floor")
 shape = SubResource("BoxShape3D_floor")
 
 [node name="StripX1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, -6.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, -6.0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_x")
 
 [node name="StripX2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, -2.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, -2.0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_x")
 
 [node name="StripX3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 2.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, 2.0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_x")
 
 [node name="StripX4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 6.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, 6.0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_x")
 
 [node name="StripZ1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, 0.012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, -0.009, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_z")
 
 [node name="StripZ2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 0.012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, -0.009, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_z")
 
 [node name="StripZ3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0, 0.012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0, -0.009, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_z")
 
 [node name="StripZ4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0.012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, -0.009, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_strip_z")
 
