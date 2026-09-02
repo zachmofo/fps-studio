@@ -21,27 +21,27 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 7 — I-7
+## Iteration 8 — I-8
 
-**Goal:** Hold Shift to sprint. Same room. Same rifle. No new geo.
+**Goal:** Dummy uses cover. Same 20x20. Same 3 boxes. No new geo.
 
-**Not this time:** aerial 3D, dummy uses cover, audio, ADS, coyote, second dummy, merge.
+**Not this time:** new boxes, aerial 3D, second dummy, audio, pig boss, ADS, merge.
 
 ### Tickets
 
-- I7-1 Shift sprint 8.0 / walk 5.0
-- I7-2 No air sprint. Shot cancels sprint. No FOV punch, slide, stamina
-- I7-3 Gun, capture, CLEARED 3s, death skip unchanged
-- I7-4 HUD unchanged, no sprint meter
-- I7-5 README, STUDIO.md, CHANGELOG
+- I8-1 Dummy takes CoverMid (right). Left mid player-only. Spawn peek is not dummy cover.
+- I8-2 Peek 0.7 m. Out 2.0 s (two shots) / in 1.5 s. Walk 2.4. Cadence 1.0 s.
+- I8-3 Capture-then-fight, CLEARED 3 s, death reset to _home then cover
+- I8-4 Player sprint/gun/HUD/room unchanged
+- I8-5 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
 | Field | Value |
 | --- | --- |
-| Date | 2026-08-29 |
+| Date | 2026-09-01 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-7 on `iter/I-7` |
+| Iteration | I-8 on `iter/I-8` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |

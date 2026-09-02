@@ -11,6 +11,15 @@ const FLASH_COLOR := Color(1, 1, 1)
 const FLASH_SEC := 0.22
 const WALK_SPEED := 2.4
 const PATROL_X := 6.0
+const OUT_SEC := 2.0
+const IN_SEC := 1.5
+const PEEK_PAST := 0.7
+const BOX_HALF_X := 0.7
+const BOX_HALF_Z := 0.35
+const CAPSULE_R := 0.4
+const ARRIVE_EPS := 0.15
+
+enum Phase { PATROL, OUT, IN }
 
 var hp: int = MAX_HP
 var _alive: bool = true
@@ -19,6 +28,10 @@ var _was_captured: bool = false
 var _home: Vector3 = Vector3.ZERO
 var _dir: float = 1.0
 var _gravity: float = 9.8
+var _phase: int = Phase.PATROL
+var _phase_t: float = 0.0
+var _hide: Vector3 = Vector3.ZERO
+var _peek: Vector3 = Vector3.ZERO
 
 @onready var _mesh: MeshInstance3D = $MeshInstance3D
 @onready var _head: MeshInstance3D = $Head
@@ -29,10 +42,27 @@ func _ready() -> void:
 	add_to_group("dummy")
 	_home = global_position
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
+	_bind_cover()
 	_mesh.set_surface_override_material(0, null)
 	_head.set_surface_override_material(0, null)
 	_set_mesh_albedo(_mesh, BASE_COLOR)
 	_set_mesh_albedo(_head, HEAD_COLOR)
+
+
+func _bind_cover() -> void:
+	var parent: Node = get_parent()
+	var box: Node3D = null
+	if parent != null:
+		box = parent.get_node_or_null("CoverMid") as Node3D
+	if box == null:
+		_hide = _home
+		_peek = _home
+		return
+	var p: Vector3 = box.global_position
+	p.y = _home.y
+	# Right-side tuck on the dummy-side (-Z). Left mid is player-only.
+	_hide = Vector3(p.x + 0.5, p.y, p.z - BOX_HALF_Z - CAPSULE_R - 0.1)
+	_peek = Vector3(p.x - BOX_HALF_X - PEEK_PAST, p.y, _hide.z)
 
 
 func receive_hit() -> void:
@@ -58,6 +88,7 @@ func reset() -> void:
 	_alive = true
 	_acc = 0.0
 	_dir = 1.0
+	_phase_t = 0.0
 	_was_captured = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	global_position = _home
 	velocity = Vector3.ZERO
@@ -66,6 +97,10 @@ func reset() -> void:
 	_col.disabled = false
 	_set_mesh_albedo(_mesh, BASE_COLOR)
 	_set_mesh_albedo(_head, HEAD_COLOR)
+	if _was_captured:
+		_phase = Phase.OUT
+	else:
+		_phase = Phase.PATROL
 
 
 func _physics_process(delta: float) -> void:
@@ -73,24 +108,69 @@ func _physics_process(delta: float) -> void:
 		return
 	if not is_on_floor():
 		velocity.y -= _gravity * delta
+
+	var captured: bool = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+	if captured and not _was_captured:
+		_acc = 0.0
+		_phase_t = 0.0
+		if _phase == Phase.PATROL:
+			_phase = Phase.OUT
+	_was_captured = captured
+
+	if not captured:
+		if _phase == Phase.PATROL:
+			_patrol()
+		else:
+			velocity.x = 0.0
+			velocity.z = 0.0
+		move_and_slide()
+		return
+
+	if _phase == Phase.PATROL:
+		_phase = Phase.OUT
+		_phase_t = 0.0
+
+	if _phase == Phase.OUT:
+		_walk_toward(_peek)
+		_phase_t += delta
+		_acc += delta
+		if _acc >= FIRE_INTERVAL:
+			_acc = 0.0
+			_return_fire()
+		if _phase_t >= OUT_SEC:
+			_phase = Phase.IN
+			_phase_t = 0.0
+			_acc = 0.0
+	else:
+		_walk_toward(_hide)
+		_phase_t += delta
+		if _phase_t >= IN_SEC:
+			_phase = Phase.OUT
+			_phase_t = 0.0
+			_acc = 0.0
+
+	move_and_slide()
+
+
+func _patrol() -> void:
 	if global_position.x > PATROL_X:
 		_dir = -1.0
 	elif global_position.x < -PATROL_X:
 		_dir = 1.0
 	velocity.x = _dir * WALK_SPEED
 	velocity.z = 0.0
-	move_and_slide()
 
-	var captured: bool = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
-	if captured and not _was_captured:
-		_acc = 0.0
-	_was_captured = captured
-	if not captured:
+
+func _walk_toward(target: Vector3) -> void:
+	var to: Vector3 = target - global_position
+	to.y = 0.0
+	if to.length() <= ARRIVE_EPS:
+		velocity.x = 0.0
+		velocity.z = 0.0
 		return
-	_acc += delta
-	if _acc >= FIRE_INTERVAL:
-		_acc = 0.0
-		_return_fire()
+	var dir: Vector3 = to.normalized()
+	velocity.x = dir.x * WALK_SPEED
+	velocity.z = dir.z * WALK_SPEED
 
 
 func _return_fire() -> void:
