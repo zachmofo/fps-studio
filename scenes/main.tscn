@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
@@ -70,6 +70,18 @@ size = Vector3(1.4, 1.0, 0.7)
 [sub_resource type="BoxShape3D" id="BoxShape3D_cover"]
 size = Vector3(1.4, 1.0, 0.7)
 
+[sub_resource type="StandardMaterial3D" id="Mat_strip"]
+shading_mode = 0
+albedo_color = Color(0.62, 0.82, 0.70, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_strip_x"]
+material = SubResource("Mat_strip")
+size = Vector3(19.6, 0.02, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_strip_z"]
+material = SubResource("Mat_strip")
+size = Vector3(0.12, 0.02, 19.6)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
 
@@ -84,6 +96,46 @@ mesh = SubResource("BoxMesh_floor")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_floor")
+
+[node name="StripX1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, -6.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_x")
+
+[node name="StripX2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, -2.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_x")
+
+[node name="StripX3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 2.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_x")
+
+[node name="StripX4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 6.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_x")
+
+[node name="StripZ1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, 0.012, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_z")
+
+[node name="StripZ2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 0.012, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_z")
+
+[node name="StripZ3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0, 0.012, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_z")
+
+[node name="StripZ4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0.012, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_strip_z")
 
 [node name="WallNorth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10.1)

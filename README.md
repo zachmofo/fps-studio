@@ -1,30 +1,29 @@
 # Iron Saint
 
-FPS Studio **Iron Saint**, Iteration **I-9**. Engine: **Godot 4.3**. Walk, sprint, jump, peek cover, shoot a dummy on CoverMid. You can tell who shot.
+FPS Studio **Iron Saint**, Iteration **I-10**. Engine: **Godot 4.3**. Killing-floor strips. Walk, sprint, jump, peek cover, shoot the dummy on CoverMid.
 
 ## Clone / open
 
 ```
-git clone -b iter/I-9 https://github.com/zachmofo/fps-studio.git
+git clone -b iter/I-10 https://github.com/zachmofo/fps-studio.git
 cd fps-studio
 ```
 
 Godot **4.3** → open `project.godot` → **F5**.
 
-1. Mouse starts **visible**. Dummy strafes. Dummy does **not** shoot. Capture click is silent.
-2. **Left-click once** to capture (no shot, no crack). Fight starts. Dummy takes CoverMid (right).
-3. Captured fire: one heavy indoor crack per round. Empty / dry fire: a short click, then reload. Dummy return-fire is a thinner, higher crack.
-4. Dummy hit: dull thunk on the 0.22 s white flash. Dummy death: short thud. No scream.
-5. **R** or empty auto-reload 1.2 s: mag-in, then close.
-6. **WASD** walk (5.0). Hold **Shift** sprint (8.0). **Space** jump.
-7. `HP N` / `AMMO n/10` / **CLEAR THE ROOM**. Kill dummy (3 hits). **CLEARED** 3 s, then dummy resets to home and retakes cover if captured.
-8. Recoil 1.8° / ±0.35° / 0.18 s. Flash 0.09 s. Mag 10. **Esc** frees the cursor.
+1. Floor: unlit fluorescent grid, 4 strips X and 4 strips Z, `Color(0.62, 0.82, 0.70)`, flush seams. They skip the orange spawn pad. No extra collision.
+2. Mouse starts **visible**. Dummy strafes. Capture click is silent (no crack).
+3. Dummy takes CoverMid (right). Peek 0.7 m. Out 2.0 s / in 1.5 s.
+4. Captured fire: heavy crack. Dummy: thinner crack. Dry/empty: click. Hit thunk. Death thud. Reload mag-in then close.
+5. **WASD** walk 5.0. **Shift** sprint 8.0. **Space** jump.
+6. `HP N` / `AMMO n/10` / **CLEAR THE ROOM**. Kill dummy (3 hits). **CLEARED** 3 s then reset.
+7. Recoil 1.8° / ±0.35° / 0.18 s. Mag 10. **Esc** frees the cursor.
 
 Sounds live under `res://audio/`.
 
-## I-9 changelog
+## I-10 changelog
 
-Player crack vs dummy crack. Dry click. Hit thunk. Death thud. Reload two beats. Cover/sprint/gun/HUD unchanged.
+Unlit floor strips, Pike color. Same room, same cover, same gun/audio/HUD.
 
 ## Known issues
 

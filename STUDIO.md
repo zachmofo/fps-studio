@@ -21,20 +21,18 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 9 — I-9
+## Iteration 10 — I-10
 
-**Goal:** You can tell who shot. Same room. Same cover. No new geo.
+**Goal:** The floor reads as a killing floor. Same 20x20. No new collision. No extra boxes.
 
-**Not this time:** music, VO, SAW belt, pig, extra geo, merge.
+**Not this time:** aerial 3D rebuild, second dummy, coyote, ADS, merge.
 
 ### Tickets
 
-- I9-1 Player crack (not on capture). Dry-fire click.
-- I9-2 Dummy hit thunk with 0.22 s flash
-- I9-3 Dummy death thud, no scream
-- I9-4 Reload mag-in + close inside 1.2 s
-- I9-5 Dummy thinner crack
-- I9-6 Sounds in res://audio. README / STUDIO / CHANGELOG
+- I10-1 Unlit 4 X + 4 Z strips, Color(0.62, 0.82, 0.70), skip orange pad
+- I10-2 Spawn, walls, cover, dummy CoverMid unchanged
+- I10-3 Sprint, gun, audio, HUD unchanged
+- I10-4 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +41,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-01 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-9 on `iter/I-9` |
+| Iteration | I-10 on `iter/I-10` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
