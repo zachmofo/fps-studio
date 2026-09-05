@@ -1,5 +1,15 @@
 # Changelog
 
+## I-15 tip fix — 2026-09-05
+
+Stay on `iter/I-15` from `082de37`. Wren S2: tip was right of HUD +.
+
+- I15F-1 Idle tip below + and ~8–12% left of screen center (yaw/offset). Chunky silhouette kept.
+- I15F-2 Muzzle flash still on barrel tip.
+- I15F-3 Kick / mag / reload / sprint-cancel unchanged.
+- I15F-4 Room / return-fire / CLEARED: no regress.
+- I15F-5 README + CHANGELOG.
+
 ## I-15 — 2026-09-05
 
 Branch `iter/I-15` from `f6d4ede`. Chunky Iron Saint viewmodel.
