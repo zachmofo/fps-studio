@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 ## I-15: chunky Iron Saint viewmodel. Kick + muzzle Pike lock.
+## I-16: impact sparks on hitscan.
 
 signal died
 
@@ -23,6 +24,7 @@ const SFX_FIRE: AudioStream = preload("res://audio/player_fire.tres")
 const SFX_DRY: AudioStream = preload("res://audio/dry_fire.tres")
 const SFX_RELOAD_MAG: AudioStream = preload("res://audio/reload_mag.tres")
 const SFX_RELOAD_CLOSE: AudioStream = preload("res://audio/reload_close.tres")
+const ImpactSparksScript = preload("res://scripts/impact_sparks.gd")
 
 @export var mouse_sensitivity: float = 0.0025
 @export var walk_speed: float = 5.0
@@ -141,9 +143,16 @@ func _hitscan() -> void:
 	var hit: Dictionary = space.intersect_ray(q)
 	if hit.is_empty():
 		return
+	var pos: Vector3 = hit.get("position", Vector3.ZERO)
 	var col: Object = hit.get("collider") as Object
 	if col != null and col.has_method("receive_hit"):
-		col.receive_hit()
+		col.receive_hit(pos)
+		return
+	var is_crate := false
+	if col is Node:
+		var n: String = (col as Node).name
+		is_crate = n.begins_with("Cover")
+	ImpactSparksScript.spawn_world(self, pos, is_crate)
 
 
 func _kick() -> void:
