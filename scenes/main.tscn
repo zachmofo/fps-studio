@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3]
+[gd_scene load_steps=35 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
@@ -102,6 +102,35 @@ size = Vector3(19.6, 0.02, 0.12)
 material = SubResource("Mat_strip")
 size = Vector3(0.12, 0.02, 19.6)
 
+[sub_resource type="StandardMaterial3D" id="Mat_grate"]
+shading_mode = 0
+albedo_color = Color(0.18, 0.18, 0.20, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_grate"]
+material = SubResource("Mat_grate")
+size = Vector3(2.0, 0.02, 2.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_pillar"]
+shading_mode = 0
+albedo_color = Color(0.35, 0.22, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+material = SubResource("Mat_pillar")
+size = Vector3(0.6, 3.2, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
+size = Vector3(0.6, 3.2, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_pipe"]
+shading_mode = 0
+albedo_color = Color(0.25, 0.22, 0.20, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pipe"]
+material = SubResource("Mat_pipe")
+top_radius = 0.12
+bottom_radius = 0.12
+height = 8.0
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
 
@@ -116,6 +145,11 @@ mesh = SubResource("BoxMesh_floor")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_floor")
+
+[node name="FloorGrate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.011, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_grate")
 
 [node name="StripX1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, -6.0)
@@ -221,6 +255,30 @@ mesh = SubResource("BoxMesh_ceiling")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
 shape = SubResource("BoxShape3D_ceiling")
+
+[node name="PillarFarLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.6, -8.0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PillarFarLeft"]
+mesh = SubResource("BoxMesh_pillar")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PillarFarLeft"]
+shape = SubResource("BoxShape3D_pillar")
+
+[node name="PipeHigh1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 9.5, 3.1, -4.0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_pipe")
+
+[node name="PipeHigh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 9.5, 2.7, 0.0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_pipe")
+
+[node name="PipeHigh3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 9.5, 3.1, 4.0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_pipe")
 
 [node name="SpawnMarker" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
