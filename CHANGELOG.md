@@ -1,5 +1,14 @@
 # Changelog
 
+## I-15 tip fix2 — 2026-09-05
+
+Stay on `iter/I-15` from `8285fca`. Wren: tip left of + but left_frac≈5.24% (need 8–12%).
+
+- I15F2-1 Tip further left; idle left_frac ∈ [0.08, 0.12]. Chunky lower-right kept.
+- I15F2-2 Muzzle stays on tip.
+- I15F2-3 Kick / mag / room / return-fire unchanged.
+- I15F2-4 Named SHA + CHANGELOG.
+
 ## I-15 tip fix — 2026-09-05
 
 Stay on `iter/I-15` from `082de37`. Wren S2: tip was right of HUD +.

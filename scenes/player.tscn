@@ -65,7 +65,7 @@ current = true
 fov = 75.0
 
 [node name="Rifle" type="Node3D" parent="Camera3D"]
-transform = Transform3D(0.766, 0, 0.643, 0, 1, 0, -0.643, 0, 0.766, 0.22, -0.22, -0.40)
+transform = Transform3D(0.643, 0, 0.766, 0, 1, 0, -0.766, 0, 0.643, 0.18, -0.22, -0.40)
 
 [node name="Receiver" type="MeshInstance3D" parent="Camera3D/Rifle"]
 cast_shadow = 0
