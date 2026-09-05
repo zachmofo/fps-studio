@@ -21,20 +21,19 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 14 — I-14
+## Iteration 15 — I-15
 
-**Goal:** Industrial room dress. Same 20×20. Keep return-fire.
+**Goal:** YOUR heavy rifle reads in FOV. Chunky Iron Saint gun, not an SMG stick.
 
-**Not this time:** pig, second dummy, player rifle upgrade (I-15), merge.
+**Not this time:** second gun, ADS zoom, brass particles required, pig, merge.
 
 ### Tickets
 
-- I14-1 Center floor grate (visual)
-- I14-2 Far-left pillar with collision
-- I14-3 Right-wall high pipes (no collision)
-- I14-4 Unlit-only materials lock
-- I14-5 No return-fire / CoverMid regress
-- I14-6 README, STUDIO.md, CHANGELOG
+- I15-1 Viewmodel silhouette (Pike lock)
+- I15-2 Kick camera + mesh
+- I15-3 Muzzle at barrel tip
+- I15-4 No room / return-fire regress
+- I15-5 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +42,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-14 on `iter/I-14` |
+| Iteration | I-15 on `iter/I-15` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |

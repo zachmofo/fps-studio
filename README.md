@@ -1,31 +1,32 @@
 # Iron Saint
 
-FPS Studio **Iron Saint**, Iteration **I-14**. Engine: **Godot 4.3**. Industrial room dress on the same 20×20 fight.
+FPS Studio **Iron Saint**, Iteration **I-15**. Engine: **Godot 4.3**. Chunky heavy rifle in FOV.
 
 ## Clone / open
 
 ```
-git clone -b iter/I-14 https://github.com/zachmofo/fps-studio.git
+git clone -b iter/I-15 https://github.com/zachmofo/fps-studio.git
 cd fps-studio
 ```
 
 Godot **4.3** → open `project.godot` → **F5**.
 
-1. Capture, then fight. Dummy peeks CoverMid with dark rifle + orange-yellow muzzle (I-13).
-2. Center floor grate (visual only). Far-left pillar blocks player + hitscan. Right-wall high pipes (no collision).
-3. Room materials still unlit-only. Floor / walls / crates / strips unchanged.
-4. **WASD** walk 5.0. **Shift** sprint 8.0. **Space** jump. Mag 10. **Esc** frees the cursor.
+1. Capture, then fight. Viewmodel: dark heavy rifle lower-right; tip clears the HUD +.
+2. Fire: camera kick 1.8° + rifle mesh ~5° down-back / 1.5 cm toward camera, settle 0.18 s. Orange-yellow muzzle at tip.
+3. Mag 10. Reload ~1.2 s. Fire cancels sprint.
+4. Room dress (I-14) + dummy return-fire (I-13) unchanged.
+5. **WASD** walk 5.0. **Shift** sprint 8.0. **Space** jump. **Esc** frees the cursor.
 
 Sounds live under `res://audio/`.
 
-## I-14 changelog
+## I-15 changelog
 
-Industrial bones: grate + pillar + pipes. Return-fire unchanged.
+Chunky Iron Saint viewmodel + kick/muzzle Pike lock.
 
 ## Known issues
 
 - No music, VO, ADS, stamina, slide, or second dummy.
-- Dummy does not use the left mid crate or the spawn peek box.
+- No hands on the viewmodel.
 - Jump has no coyote time.
 - Capsule vs box corners can still catch at speed.
 - Editor F5 only.

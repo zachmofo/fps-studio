@@ -1,28 +1,27 @@
 # Changelog
 
+## I-15 — 2026-09-05
+
+Branch `iter/I-15` from `f6d4ede`. Chunky Iron Saint viewmodel.
+
+- I15-1 Dark heavy rifle FOV: long receiver + thick barrel, Color(0.10,0.10,0.12), rail edge (0.22,0.22,0.24), iron block sight. Tip clears HUD reticle (~8–12% left of center).
+- I15-2 Camera kick 1.8° / ±0.35° / 0.18 s. Rifle mesh kick ~5° down-back + 1.5 cm toward camera. Fire cancels sprint. Mag 10 / reload 1.2 s.
+- I15-3 Muzzle Color(1.0,0.55,0.12) r0.09, 0.09 s at barrel tip.
+- I15-4 Room dress + return-fire + CoverMid/humanoid/CLEARED: no regress.
+- I15-5 README clone path is `iter/I-15`. STUDIO.md current state is I-15.
+
 ## I-14 — 2026-09-05
 
-Branch `iter/I-14` from `3203c8f`. Industrial room dress. Same 20×20 fight.
-
-- I14-1 Center floor grate Color(0.18,0.18,0.20) unlit ~2×2 m, visual only.
-- I14-2 Far-left pillar ~0.6×0.6×3.2 Color(0.35,0.22,0.16) unlit with collision.
-- I14-3 Right-wall high pipes: 3 cylinders r0.12 Color(0.25,0.22,0.20) unlit @~2.7–3.1 m, no collision. Pillar clear of CoverMid/dummy out-lane.
-- I14-4 Unlit-only; floor/walls/crates/strips unchanged.
-- I14-5 Return-fire + CoverMid + humanoid + CLEARED: no regress.
-- I14-6 README clone path is `iter/I-14`. STUDIO.md current state is I-14.
+Industrial room dress. Branch `iter/I-14` from `3203c8f`.
 
 ## I-13 — 2026-09-05
 
-Return-fire proof. Pike lock gun/muzzle/hit flash. Branch `iter/I-13` from `c39592b`.
+Return-fire proof. Pike lock gun/muzzle/hit flash.
 
 ## I-12 — 2026-09-05
 
-Humanoid silhouette + red eyes. Collision / CoverMid peek unchanged.
+Humanoid silhouette + red eyes.
 
 ## I-11 — 2026-09-05
 
 Concrete floor, industrial walls, metal crates, flush strips.
-
-## I-10 — 2026-09-01
-
-Flush strips Color(0.62, 0.82, 0.70).
