@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 
@@ -8,31 +8,45 @@ height = 1.8
 
 [sub_resource type="StandardMaterial3D" id="Mat_rifle"]
 shading_mode = 0
-albedo_color = Color(0.08, 0.08, 0.09, 1)
+albedo_color = Color(0.10, 0.10, 0.12, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_receiver"]
 material = SubResource("Mat_rifle")
-size = Vector3(0.07, 0.09, 0.24)
+size = Vector3(0.11, 0.13, 0.30)
 
 [sub_resource type="BoxMesh" id="BoxMesh_barrel"]
 material = SubResource("Mat_rifle")
-size = Vector3(0.03, 0.03, 0.42)
+size = Vector3(0.055, 0.055, 0.36)
 
 [sub_resource type="BoxMesh" id="BoxMesh_stock"]
 material = SubResource("Mat_rifle")
-size = Vector3(0.05, 0.08, 0.16)
+size = Vector3(0.08, 0.11, 0.18)
 
 [sub_resource type="BoxMesh" id="BoxMesh_mag"]
 material = SubResource("Mat_rifle")
-size = Vector3(0.04, 0.11, 0.07)
+size = Vector3(0.05, 0.15, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_rail"]
+shading_mode = 0
+albedo_color = Color(0.22, 0.22, 0.24, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rail"]
+material = SubResource("Mat_rail")
+size = Vector3(0.04, 0.02, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sight"]
+material = SubResource("Mat_rifle")
+size = Vector3(0.03, 0.04, 0.03)
 
 [sub_resource type="StandardMaterial3D" id="Mat_flash"]
+transparency = 1
 shading_mode = 0
-albedo_color = Color(1, 0.82, 0.35, 1)
+albedo_color = Color(1.0, 0.55, 0.12, 0.95)
 
-[sub_resource type="BoxMesh" id="BoxMesh_flash"]
+[sub_resource type="SphereMesh" id="SphereMesh_flash"]
 material = SubResource("Mat_flash")
-size = Vector3(0.04, 0.04, 0.06)
+radius = 0.09
+height = 0.18
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -51,27 +65,42 @@ current = true
 fov = 75.0
 
 [node name="Rifle" type="Node3D" parent="Camera3D"]
-transform = Transform3D(0.99, 0, 0.141, 0, 1, 0, -0.141, 0, 0.99, 0.24, -0.18, -0.42)
+transform = Transform3D(0.951, 0, 0.309, 0, 1, 0, -0.309, 0, 0.951, 0.20, -0.22, -0.38)
 
 [node name="Receiver" type="MeshInstance3D" parent="Camera3D/Rifle"]
+cast_shadow = 0
 mesh = SubResource("BoxMesh_receiver")
 
 [node name="Barrel" type="MeshInstance3D" parent="Camera3D/Rifle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.30)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_barrel")
 
 [node name="Stock" type="MeshInstance3D" parent="Camera3D/Rifle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0.18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0.20)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_stock")
 
 [node name="Mag" type="MeshInstance3D" parent="Camera3D/Rifle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09, 0.02)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0.02)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_mag")
 
+[node name="Rail" type="MeshInstance3D" parent="Camera3D/Rifle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.02)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_rail")
+
+[node name="Sight" type="MeshInstance3D" parent="Camera3D/Rifle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, -0.12)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_sight")
+
 [node name="MuzzleFlash" type="MeshInstance3D" parent="Camera3D/Rifle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.54)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.52)
 visible = false
-mesh = SubResource("BoxMesh_flash")
+cast_shadow = 0
+mesh = SubResource("SphereMesh_flash")
 
 [node name="Hud" type="CanvasLayer" parent="."]
 
