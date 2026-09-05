@@ -24,6 +24,7 @@ const ARRIVE_EPS := 0.15
 const SFX_FIRE: AudioStream = preload("res://audio/dummy_fire.tres")
 const SFX_HIT: AudioStream = preload("res://audio/dummy_hit.tres")
 const SFX_DEATH: AudioStream = preload("res://audio/dummy_death.tres")
+const ImpactSparksScript = preload("res://scripts/impact_sparks.gd")
 
 enum Phase { PATROL, OUT, IN }
 
@@ -121,11 +122,15 @@ func _play(player: AudioStreamPlayer, stream: AudioStream) -> void:
 	player.play()
 
 
-func receive_hit() -> void:
+func receive_hit(hit_pos: Vector3 = Vector3.INF) -> void:
 	if not _alive:
 		return
 	hp -= 1
 	_play(_sfx_hit, SFX_HIT)
+	var at: Vector3 = hit_pos
+	if not at.is_finite():
+		at = global_position + Vector3(0.0, 1.2, 0.0)
+	ImpactSparksScript.spawn_dummy(self, at, hp <= 0)
 	_flash()
 	if hp <= 0:
 		_die()
