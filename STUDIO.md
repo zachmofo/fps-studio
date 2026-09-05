@@ -21,20 +21,20 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 13 — I-13
+## Iteration 14 — I-14
 
-**Goal:** The dummy CLEARLY shoots back. Hide and you see/feel the peek shot.
+**Goal:** Industrial room dress. Same 20×20. Keep return-fire.
 
-**Not this time:** grate/pillar/pipes (later), pig, second dummy, merge.
+**Not this time:** pig, second dummy, player rifle upgrade (I-15), merge.
 
 ### Tickets
 
-- I13-1 Dummy gun mesh while peeking
-- I13-2 Muzzle flash with return-fire crack
-- I13-3 0.75 s out cadence, LOS only
-- I13-4 Harder player hit flash
-- I13-5 Silhouette / CoverMid / materials unchanged
-- I13-6 README, STUDIO.md, CHANGELOG
+- I14-1 Center floor grate (visual)
+- I14-2 Far-left pillar with collision
+- I14-3 Right-wall high pipes (no collision)
+- I14-4 Unlit-only materials lock
+- I14-5 No return-fire / CoverMid regress
+- I14-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +43,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-13 on `iter/I-13` |
+| Iteration | I-14 on `iter/I-14` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
