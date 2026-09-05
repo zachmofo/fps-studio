@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-## I-9: walk/sprint/jump, heavy rifle, cover dummy, gun audio.
+## I-15: chunky Iron Saint viewmodel. Kick + muzzle Pike lock.
 
 signal died
 
@@ -13,8 +13,8 @@ const WORLD_AND_DUMMY := 1 | 4
 const RECOIL_PITCH := deg_to_rad(1.8)
 const RECOIL_YAW := deg_to_rad(0.35)
 const RECOIL_SETTLE := 0.18
-const RIFLE_KICK_PITCH := deg_to_rad(3.2)
-const RIFLE_KICK_Z := 0.028
+const RIFLE_KICK_PITCH := deg_to_rad(5.0)
+const RIFLE_KICK_Z := 0.015
 const FLASH_SEC := 0.09
 const OBJ_DIM := Color(0.7, 0.7, 0.7, 1)
 const OBJ_BRIGHT := Color(1, 1, 1, 1)
@@ -262,8 +262,9 @@ func _apply_view() -> void:
 	_camera.rotation.y = _recoil_yaw
 	if _rifle:
 		var kick_xf: Transform3D = _rifle_rest
+		# Toward camera (+Z) 1.5cm + down-back pitch ~5°
 		kick_xf.origin.z += RIFLE_KICK_Z * _rifle_kick
-		kick_xf.origin.y += 0.012 * _rifle_kick
+		kick_xf.origin.y += 0.010 * _rifle_kick
 		_rifle.transform = kick_xf
 		_rifle.rotation.x = _rifle_rest.basis.get_euler().x - RIFLE_KICK_PITCH * _rifle_kick
 
