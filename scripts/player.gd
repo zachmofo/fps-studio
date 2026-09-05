@@ -200,10 +200,12 @@ func take_damage(amount: int) -> void:
 func _player_hit_flash() -> void:
 	if _hit_flash == null:
 		return
-	_hit_flash.color = Color(0.9, 0.05, 0.04, 0.82)
-	await get_tree().create_timer(0.18).timeout
-	if _hit_flash:
-		_hit_flash.color = Color(0.9, 0.05, 0.04, 0.0)
+	_hit_flash.color = Color(0.85, 0.08, 0.06, 0.60)
+	await get_tree().create_timer(0.06).timeout
+	if _hit_flash == null:
+		return
+	var tw: Tween = create_tween()
+	tw.tween_property(_hit_flash, "color:a", 0.0, 0.12)
 
 
 func _die() -> void:
