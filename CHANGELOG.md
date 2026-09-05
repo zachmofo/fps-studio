@@ -1,5 +1,16 @@
 # Changelog
 
+## I-16 — 2026-09-05
+
+Branch `iter/I-16` from `c32923d`. Bright spit on every crack.
+
+- I16-1 World impact: 4–8 unshaded spheres at hit, Color(1.0,0.75,0.25)→(0.6,0.35,0.1), life 0.12–0.18s, spread ~0.15m. No decals.
+- I16-2 Cover crate hit: same sparks + one darker fleck Color(0.25,0.25,0.22).
+- I16-3 Dummy hit: white flash ≥0.2s kept; +3–5 orange sparks ~(1.0,0.55,0.12) 0.10–0.15s; bigger pop on kill. Eyes stay red.
+- I16-4 Timed MeshInstance + unshaded materials (Compatibility). No blood/brass/HUD VFX.
+- I16-5 Player muzzle / tip left_frac / kick / room / return-fire / CLEARED: no regress.
+- I16-6 README `iter/I-16`. STUDIO.md = I-16. CHANGELOG.
+
 ## I-15 tip fix2 — 2026-09-05
 
 Stay on `iter/I-15` from `8285fca`. Wren: tip left of + but left_frac≈5.24% (need 8–12%).

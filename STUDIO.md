@@ -21,19 +21,20 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 15 — I-15
+## Iteration 16 — I-16
 
-**Goal:** YOUR heavy rifle reads in FOV. Chunky Iron Saint gun, not an SMG stick.
+**Goal:** every crack shows a bright spit where the shot landed.
 
-**Not this time:** second gun, ADS zoom, brass particles required, pig, merge.
+**Not this time:** pig, second dummy, merge, full particle rewrite.
 
 ### Tickets
 
-- I15-1 Viewmodel silhouette (Pike lock)
-- I15-2 Kick camera + mesh
-- I15-3 Muzzle at barrel tip
-- I15-4 No room / return-fire regress
-- I15-5 README, STUDIO.md, CHANGELOG
+- I16-1 World impact sparks (walls/floor/misses)
+- I16-2 Crate hit: sparks + dark fleck
+- I16-3 Dummy hit: white flash + orange sparks
+- I16-4 Compatibility MeshInstance / timed meshes
+- I16-5 No muzzle / tip / kick / room / RF regress
+- I16-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -42,6 +43,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-15 on `iter/I-15` |
+| Iteration | I-16 on `iter/I-16` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
