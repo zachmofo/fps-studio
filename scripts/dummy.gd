@@ -6,7 +6,8 @@ const MAX_HP := 3
 const FIRE_INTERVAL := 1.0
 const WORLD_AND_PLAYER := 1 | 2
 const BASE_COLOR := Color(0.72, 0.22, 0.18)
-const HEAD_COLOR := Color(0.12, 0.10, 0.10)
+const SHOULDER_COLOR := Color(0.45, 0.12, 0.10)
+const EYE_COLOR := Color(0.95, 0.12, 0.08)
 const FLASH_COLOR := Color(1, 1, 1)
 const FLASH_SEC := 0.22
 const WALK_SPEED := 2.4
@@ -40,9 +41,21 @@ var _sfx_shot: AudioStreamPlayer
 var _sfx_hit: AudioStreamPlayer
 var _sfx_death: AudioStreamPlayer
 
-@onready var _mesh: MeshInstance3D = $MeshInstance3D
-@onready var _head: MeshInstance3D = $Head
+@onready var _torso: MeshInstance3D = $Visuals/Torso
+@onready var _shoulders: MeshInstance3D = $Visuals/Shoulders
+@onready var _hips: MeshInstance3D = $Visuals/Hips
+@onready var _head: MeshInstance3D = $Visuals/Head
+@onready var _eye_l: MeshInstance3D = $Visuals/EyeL
+@onready var _eye_r: MeshInstance3D = $Visuals/EyeR
 @onready var _col: CollisionShape3D = $CollisionShape3D
+
+
+func _body_meshes() -> Array:
+	return [_torso, _shoulders, _hips, _head]
+
+
+func _all_meshes() -> Array:
+	return [_torso, _shoulders, _hips, _head, _eye_l, _eye_r]
 
 
 func _ready() -> void:
@@ -53,10 +66,16 @@ func _ready() -> void:
 	_sfx_shot = _make_sfx("SfxShot")
 	_sfx_hit = _make_sfx("SfxHit")
 	_sfx_death = _make_sfx("SfxDeath")
-	_mesh.set_surface_override_material(0, null)
-	_head.set_surface_override_material(0, null)
-	_set_mesh_albedo(_mesh, BASE_COLOR)
-	_set_mesh_albedo(_head, HEAD_COLOR)
+	_paint_alive()
+
+
+func _paint_alive() -> void:
+	_set_mesh_albedo(_torso, BASE_COLOR)
+	_set_mesh_albedo(_hips, BASE_COLOR)
+	_set_mesh_albedo(_head, BASE_COLOR)
+	_set_mesh_albedo(_shoulders, SHOULDER_COLOR)
+	_set_mesh_albedo(_eye_l, EYE_COLOR)
+	_set_mesh_albedo(_eye_r, EYE_COLOR)
 
 
 func _bind_cover() -> void:
@@ -102,8 +121,9 @@ func receive_hit() -> void:
 func _die() -> void:
 	_alive = false
 	velocity = Vector3.ZERO
-	_mesh.visible = false
-	_head.visible = false
+	for m in _all_meshes():
+		if m != null:
+			m.visible = false
 	_col.disabled = true
 	_play(_sfx_death, SFX_DEATH)
 	killed.emit()
@@ -118,11 +138,11 @@ func reset() -> void:
 	_was_captured = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	global_position = _home
 	velocity = Vector3.ZERO
-	_mesh.visible = true
-	_head.visible = true
+	for m in _all_meshes():
+		if m != null:
+			m.visible = true
 	_col.disabled = false
-	_set_mesh_albedo(_mesh, BASE_COLOR)
-	_set_mesh_albedo(_head, HEAD_COLOR)
+	_paint_alive()
 	if _was_captured:
 		_phase = Phase.OUT
 	else:
@@ -224,12 +244,14 @@ func _return_fire() -> void:
 
 
 func _flash() -> void:
-	_set_mesh_albedo(_mesh, FLASH_COLOR)
-	_set_mesh_albedo(_head, FLASH_COLOR)
+	for m in _body_meshes():
+		_set_mesh_albedo(m, FLASH_COLOR)
+	# Eyes stay red through the flash.
+	_set_mesh_albedo(_eye_l, EYE_COLOR)
+	_set_mesh_albedo(_eye_r, EYE_COLOR)
 	await get_tree().create_timer(FLASH_SEC).timeout
 	if _alive:
-		_set_mesh_albedo(_mesh, BASE_COLOR)
-		_set_mesh_albedo(_head, HEAD_COLOR)
+		_paint_alive()
 
 
 func _set_mesh_albedo(mesh_inst: MeshInstance3D, c: Color) -> void:

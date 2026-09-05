@@ -1,5 +1,15 @@
 # Changelog
 
+## I-12 — 2026-09-05
+
+Branch `iter/I-12` from `4f795e9`. Pike humanoid lock. Pressure cycle 1/2.
+
+- I12-1 Humanoid silhouette: torso capsule r=0.38 h=1.35 @0.95, hips mass, ~8° lean. Rust-red Color(0.72, 0.22, 0.18). Shoulders ~0.95 tip-to-tip Color(0.45, 0.12, 0.10). Head sphere r=0.22 @1.65 rust-red. No snout/tusks/arms/LMG.
+- I12-2 Two eye spheres r=0.045 spaced 0.12 m, Color(0.95, 0.12, 0.08) unshaded. Stay red through flash.
+- I12-3 White flash ≥0.22 s on body mesh set. 3 HP. Collision capsule r=0.4 h=1.8 unchanged. CoverMid peek math unchanged.
+- I12-4 CoverMid AI, sprint, gun, HUD, CLEARED, I-11 materials: unchanged.
+- I12-5 README clone path is `iter/I-12`. STUDIO.md current state is I-12.
+
 ## I-11 — 2026-09-05
 
 Branch `iter/I-11` from `9c108b4`. Pike material lock.
@@ -13,24 +23,8 @@ Branch `iter/I-11` from `9c108b4`. Pike material lock.
 
 ## I-10 — 2026-09-01
 
-Branch `iter/I-10` from `6fa3a6e`. Pike strip lock.
-
-- I10-1 Unlit fluorescent strips on the floor. 4 X + 4 Z, equally spaced 4m. Flush in the floor seams (not proud). Skip the orange pad. Albedo Color(0.62, 0.82, 0.70), unshaded, dim, no emission. No collision. No light nodes.
-- I10-2 Orange spawn pad, gray walls/ceiling, three cover boxes, dummy CoverMid: unchanged.
-- I10-3 Sprint, gun, audio, HUD, CLEARED: unchanged.
-- I10-4 README clone path is `iter/I-10`. STUDIO.md current state is I-10.
+Branch `iter/I-10` from `6fa3a6e`. Pike strip lock. Flush strips Color(0.62, 0.82, 0.70).
 
 ## I-9 — 2026-09-01
 
-Branch `iter/I-9` from `c228b0b`. Pike audio lock.
-
-- I9-1 Player captured fire: one heavy crack per round. Not on the capture click. Dry fire / empty: short click, no crack.
-- I9-2 Dummy `receive_hit`: dull thunk on the same frame as the 0.22 s white flash.
-- I9-3 Dummy death: short thud. No scream.
-- I9-4 Reload: two beats inside 1.2 s (mag in, close).
-- I9-5 Dummy return-fire: thinner, higher, less bass than the player. Still one crack.
-- I9-6 Sounds live in `res://audio/`. README clone path is `iter/I-9`. STUDIO.md current state is I-9.
-
-## I-8 — 2026-09-01
-
-Dummy takes CoverMid (right). Peek 0.7 m. Out 2.0 s / in 1.5 s.
+Player crack vs dummy crack. Dry click. Hit thunk. Death thud. Reload two beats.

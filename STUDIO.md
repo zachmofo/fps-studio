@@ -21,20 +21,19 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 11 — I-11
+## Iteration 12 — I-12
 
-**Goal:** The room stops looking like a graybox. Same 20x20. Same fight. No new gameplay.
+**Goal:** The target stops reading as a training pill. Same 20x20. Same CoverMid duel.
 
-**Not this time:** second dummy, aerial 3D rebuild, pig boss, ADS, coyote, merge, PBR metalness maps.
+**Not this time:** pig, LMG, second dummy, room rebuild, merge.
 
 ### Tickets
 
-- I11-1 Floor concrete Color(0.14, 0.14, 0.16); strips stay locked
-- I11-2 Walls / ceiling industrial; mid scuff; unshaded
-- I11-3 Metal crates with rim; same collision
-- I11-4 Unlit only; strips are the light
-- I11-5 Fight / gun / audio / HUD unchanged
-- I11-6 README, STUDIO.md, CHANGELOG
+- I12-1 Humanoid torso + shoulders + head (Pike proportions)
+- I12-2 Glowing red eyes
+- I12-3 Flash / HP / collision / peek math unchanged
+- I12-4 Fight systems + I-11 materials unchanged
+- I12-5 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +42,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-11 on `iter/I-11` |
+| Iteration | I-12 on `iter/I-12` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
