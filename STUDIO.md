@@ -21,26 +21,28 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 10 — I-10
+## Iteration 11 — I-11
 
-**Goal:** The floor reads as a killing floor. Same 20x20. No new collision. No extra boxes.
+**Goal:** The room stops looking like a graybox. Same 20x20. Same fight. No new gameplay.
 
-**Not this time:** aerial 3D rebuild, second dummy, coyote, ADS, merge.
+**Not this time:** second dummy, aerial 3D rebuild, pig boss, ADS, coyote, merge, PBR metalness maps.
 
 ### Tickets
 
-- I10-1 Unlit 4 X + 4 Z strips, Color(0.62, 0.82, 0.70), skip orange pad
-- I10-2 Spawn, walls, cover, dummy CoverMid unchanged
-- I10-3 Sprint, gun, audio, HUD unchanged
-- I10-4 README, STUDIO.md, CHANGELOG
+- I11-1 Floor concrete Color(0.14, 0.14, 0.16); strips stay locked
+- I11-2 Walls / ceiling industrial; mid scuff; unshaded
+- I11-3 Metal crates with rim; same collision
+- I11-4 Unlit only; strips are the light
+- I11-5 Fight / gun / audio / HUD unchanged
+- I11-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
 | Field | Value |
 | --- | --- |
-| Date | 2026-09-01 |
+| Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-10 on `iter/I-10` |
+| Iteration | I-11 on `iter/I-11` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=28 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
@@ -8,12 +8,12 @@
 background_mode = 1
 background_color = Color(0.08, 0.08, 0.1, 1)
 ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 1.0
+ambient_light_color = Color(0.85, 0.9, 0.88, 1)
+ambient_light_energy = 1.15
 
 [sub_resource type="StandardMaterial3D" id="Mat_floor"]
 shading_mode = 0
-albedo_color = Color(0.12, 0.12, 0.14, 1)
+albedo_color = Color(0.14, 0.14, 0.16, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 material = SubResource("Mat_floor")
@@ -24,7 +24,7 @@ size = Vector3(20, 0.2, 20)
 
 [sub_resource type="StandardMaterial3D" id="Mat_wall"]
 shading_mode = 0
-albedo_color = Color(0.55, 0.56, 0.58, 1)
+albedo_color = Color(0.42, 0.40, 0.38, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wall_ns"]
 material = SubResource("Mat_wall")
@@ -40,9 +40,21 @@ size = Vector3(0.2, 4, 20)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
 size = Vector3(0.2, 4, 20)
 
+[sub_resource type="StandardMaterial3D" id="Mat_scuff"]
+shading_mode = 0
+albedo_color = Color(0.30, 0.28, 0.26, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_scuff_ns"]
+material = SubResource("Mat_scuff")
+size = Vector3(20.0, 0.35, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_scuff_ew"]
+material = SubResource("Mat_scuff")
+size = Vector3(0.04, 0.35, 20.0)
+
 [sub_resource type="StandardMaterial3D" id="Mat_ceiling"]
 shading_mode = 0
-albedo_color = Color(0.35, 0.36, 0.38, 1)
+albedo_color = Color(0.28, 0.28, 0.30, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ceiling"]
 material = SubResource("Mat_ceiling")
@@ -61,7 +73,7 @@ size = Vector3(0.4, 0.08, 0.4)
 
 [sub_resource type="StandardMaterial3D" id="Mat_cover"]
 shading_mode = 0
-albedo_color = Color(0.28, 0.24, 0.20, 1)
+albedo_color = Color(0.22, 0.24, 0.22, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cover"]
 material = SubResource("Mat_cover")
@@ -69,6 +81,14 @@ size = Vector3(1.4, 1.0, 0.7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cover"]
 size = Vector3(1.4, 1.0, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="Mat_cover_edge"]
+shading_mode = 0
+albedo_color = Color(0.30, 0.32, 0.30, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cover_edge"]
+material = SubResource("Mat_cover_edge")
+size = Vector3(1.44, 0.06, 0.74)
 
 [sub_resource type="StandardMaterial3D" id="Mat_strip"]
 shading_mode = 0
@@ -146,6 +166,11 @@ mesh = SubResource("BoxMesh_wall_ns")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
 shape = SubResource("BoxShape3D_wall_ns")
 
+[node name="Scuff" type="MeshInstance3D" parent="WallNorth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0.08)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_ns")
+
 [node name="WallSouth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10.1)
 
@@ -154,6 +179,11 @@ mesh = SubResource("BoxMesh_wall_ns")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
 shape = SubResource("BoxShape3D_wall_ns")
+
+[node name="Scuff" type="MeshInstance3D" parent="WallSouth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -0.08)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_ns")
 
 [node name="WallWest" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1, 2, 0)
@@ -164,6 +194,11 @@ mesh = SubResource("BoxMesh_wall_ew")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
 shape = SubResource("BoxShape3D_wall_ew")
 
+[node name="Scuff" type="MeshInstance3D" parent="WallWest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, -0.2, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_ew")
+
 [node name="WallEast" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1, 2, 0)
 
@@ -172,6 +207,11 @@ mesh = SubResource("BoxMesh_wall_ew")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallEast"]
 shape = SubResource("BoxShape3D_wall_ew")
+
+[node name="Scuff" type="MeshInstance3D" parent="WallEast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.2, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_ew")
 
 [node name="Ceiling" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
@@ -198,6 +238,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -2.2)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CoverPeek"]
 mesh = SubResource("BoxMesh_cover")
 
+[node name="Edge" type="MeshInstance3D" parent="CoverPeek"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cover_edge")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CoverPeek"]
 shape = SubResource("BoxShape3D_cover")
 
@@ -207,6 +252,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.5, -4.5)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CoverMid"]
 mesh = SubResource("BoxMesh_cover")
 
+[node name="Edge" type="MeshInstance3D" parent="CoverMid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cover_edge")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CoverMid"]
 shape = SubResource("BoxShape3D_cover")
 
@@ -215,6 +265,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0.5, -5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CoverLeft"]
 mesh = SubResource("BoxMesh_cover")
+
+[node name="Edge" type="MeshInstance3D" parent="CoverLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cover_edge")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CoverLeft"]
 shape = SubResource("BoxShape3D_cover")
