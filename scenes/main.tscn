@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3]
+[gd_scene load_steps=46 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
@@ -131,6 +131,50 @@ top_radius = 0.12
 bottom_radius = 0.12
 height = 8.0
 
+[sub_resource type="StandardMaterial3D" id="Mat_door"]
+shading_mode = 0
+albedo_color = Color(0.16, 0.16, 0.18, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_door"]
+material = SubResource("Mat_door")
+size = Vector3(2.0, 2.4, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="Mat_door_frame"]
+shading_mode = 0
+albedo_color = Color(0.35, 0.22, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_door_frame"]
+material = SubResource("Mat_door_frame")
+size = Vector3(2.12, 2.52, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="Mat_cage"]
+shading_mode = 0
+albedo_color = Color(0.62, 0.82, 0.70, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cage"]
+material = SubResource("Mat_cage")
+size = Vector3(0.9, 0.14, 0.45)
+
+[sub_resource type="StandardMaterial3D" id="Mat_stain"]
+shading_mode = 0
+albedo_color = Color(0.08, 0.09, 0.09, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stain"]
+material = SubResource("Mat_stain")
+size = Vector3(1.2, 0.01, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="Mat_scuff_mid"]
+shading_mode = 0
+albedo_color = Color(0.32, 0.30, 0.28, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_scuff_mid_ns"]
+material = SubResource("Mat_scuff_mid")
+size = Vector3(20.0, 0.55, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_scuff_mid_ew"]
+material = SubResource("Mat_scuff_mid")
+size = Vector3(0.04, 0.55, 20.0)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
 
@@ -150,6 +194,31 @@ shape = SubResource("BoxShape3D_floor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.011, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_grate")
+
+[node name="StainGrate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.012, 0.8)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_stain")
+
+[node name="StainCoverMid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.012, -3.8)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_stain")
+
+[node name="StainCoverPeek" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 0.012, -1.6)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_stain")
+
+[node name="StainCoverLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0, 0.012, -4.3)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_stain")
+
+[node name="StainLane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0.012, -6.2)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_stain")
 
 [node name="StripX1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009, -6.0)
@@ -205,6 +274,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0.08)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_scuff_ns")
 
+[node name="ScuffMid" type="MeshInstance3D" parent="WallNorth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.08)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_mid_ns")
+
+[node name="DoorFrame" type="MeshInstance3D" parent="WallNorth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0.05)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_door_frame")
+
+[node name="SealedDoor" type="MeshInstance3D" parent="WallNorth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0.04)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_door")
+
 [node name="WallSouth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10.1)
 
@@ -247,6 +331,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.2, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_scuff_ew")
 
+[node name="ScuffMid" type="MeshInstance3D" parent="WallEast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.1, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_scuff_mid_ew")
+
 [node name="Ceiling" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
 
@@ -255,6 +344,21 @@ mesh = SubResource("BoxMesh_ceiling")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
 shape = SubResource("BoxShape3D_ceiling")
+
+[node name="CageLight1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0, 3.85, -3.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cage")
+
+[node name="CageLight2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 3.85, -3.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cage")
+
+[node name="CageLight3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0, 3.85, -3.0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cage")
 
 [node name="PillarFarLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.6, -8.0)
