@@ -21,20 +21,20 @@ Source of truth: this file + https://github.com/zachmofo/fps-studio (`STUDIO.md`
 
 Godot **4.3**, GDScript, GL Compatibility.
 
-## Iteration 16 — I-16
+## Iteration 17 — I-17
 
-**Goal:** every crack shows a bright spit where the shot landed.
+**Goal:** second arena dress beat toward Pike vision. Same 20×20. Don’t move the fight.
 
-**Not this time:** pig, second dummy, merge, full particle rewrite.
+**Not this time:** left peek lane crates, open door, second dummy, Omni lights, pig, merge.
 
 ### Tickets
 
-- I16-1 World impact sparks (walls/floor/misses)
-- I16-2 Crate hit: sparks + dark fleck
-- I16-3 Dummy hit: white flash + orange sparks
-- I16-4 Compatibility MeshInstance / timed meshes
-- I16-5 No muzzle / tip / kick / room / RF regress
-- I16-6 README, STUDIO.md, CHANGELOG
+- I17-1 Sealed north door + rust frame
+- I17-2 Ceiling cage lights (mint, unlit)
+- I17-3 Floor stains
+- I17-4 Mid-wall scuff band
+- I17-5 No fight / sparks / gun / RF regress
+- I17-6 README, STUDIO.md, CHANGELOG
 
 ## Current state
 
@@ -43,6 +43,6 @@ Godot **4.3**, GDScript, GL Compatibility.
 | Date | 2026-09-05 |
 | Name | Iron Saint |
 | Engine | Godot 4.3 |
-| Iteration | I-16 on `iter/I-16` |
+| Iteration | I-17 on `iter/I-17` |
 | Repo | https://github.com/zachmofo/fps-studio |
 | Merge | do not merge to main |
